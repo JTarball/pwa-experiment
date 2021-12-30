@@ -1,11 +1,12 @@
 /**
- * Page Home
+ * Copyright (c) IBM, Corp. and its affiliates.
  *
- * Properties down, events up is best practice for lit
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
-import { html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { html, css, render } from "lit";
+import { customElement, state, property } from "lit/decorators.js";
 
 import "@vaadin/vaadin-lumo-styles/utility";
 
@@ -14,18 +15,30 @@ import { PageElement } from "../helpers/page-element.js";
 
 import "../components/top-navbar";
 import "../components/bottom-navbar";
-import "../components/yld0-tabs";
-import "../components/yld0-tab";
-import "../components/yld0-tabitem";
-import "../components/tabs/insight-trends";
-import "../components/tabs/home-watchlist";
-import "../components/tabs/home-recent";
+
+import "@vaadin/avatar";
+import "@vaadin/button";
+import "@vaadin/grid";
+import "@vaadin/grid/vaadin-grid-selection-column.js";
+import type { GridItemModel } from "@vaadin/grid";
+import "@vaadin/horizontal-layout";
+import "@vaadin/vertical-layout";
+//import { getPeople } from "Frontend/demo/domain/DataService";
+import { Stock } from "../store/models.js";
 
 import { themeStyles } from "../themes/yld0-theme/styles.js";
 import { utility } from "@vaadin/vaadin-lumo-styles/utility";
+import { badge } from "@vaadin/vaadin-lumo-styles/badge.js";
+import "@vaadin/vaadin-lumo-styles/vaadin-iconset";
+import "@vaadin/icon";
 
-@customElement("page-home")
-export class PageHome extends PageElement {
+import "../components/alerts.js";
+
+@customElement("page-alerts")
+export class PageAlerts extends PageElement {
+    @state()
+    private items?: Stock[];
+
     @property()
     private modalOpen: Boolean = false;
 
@@ -36,6 +49,7 @@ export class PageHome extends PageElement {
     private modalRenderer: TemplateResult;
 
     static styles = [
+        badge,
         utility,
         themeStyles,
         css`
@@ -68,14 +82,7 @@ export class PageHome extends PageElement {
 
             <!-- The main content is added / removed dynamically by the router -->
             <section>
-                <yld0-tabs>
-                    <yld0-tab title="Watching">
-                        <home-watchlist></home-watchlist>
-                    </yld0-tab>
-                    <yld0-tab title="Recently Viewed">
-                        <home-recent></home-recent>
-                    </yld0-tab>
-                </yld0-tabs>
+                <alerts-home @row-clicked=${this.handleModalOpen}></alerts-home>
             </section>
 
             <!-- slot, just in case -->
@@ -91,8 +98,8 @@ export class PageHome extends PageElement {
 
     meta() {
         return {
-            title: config.appName,
-            titleTemplate: null,
+            title: "Alerts",
+            titleTemplate: "List of alerts",
             description: config.appDescription,
         };
     }

@@ -5,101 +5,264 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { LitElement, html, css } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import type { RouterLocation } from "@vaadin/router";
+import { LitElement, html, css } from "lit";
+import { customElement, query, property, state } from "lit/decorators.js";
 
-import config from '../config.js';
-import { attachRouter, urlForName } from '../router/index.js';
+import { attachRouter, urlForName, router, getLocation } from "../router/index.js";
 
-import 'pwa-helper-components/pwa-install-button.js';
-import 'pwa-helper-components/pwa-update-available.js';
+import "pwa-helper-components/pwa-install-button.js";
+import "pwa-helper-components/pwa-update-available.js";
 
-@customElement('app-index')
+import "./menu.js";
+import "@material/mwc-button";
+import "@material/mwc-icon";
+import "@material/mwc-icon-button";
+
+//import { menuController } from '@ionic/core';
+//import "@vaadin/vaadin-lumo-styles/all-imports";
+import "@vaadin/app-layout";
+import "@vaadin/icons";
+import "@vaadin/icon";
+import "@vaadin/tabs";
+import "@vaadin/polymer-legacy-adapter";
+import "@vaadin/vaadin-app-layout";
+
+import "@vaadin/vaadin-app-layout/vaadin-drawer-toggle";
+import "@vaadin/vaadin-avatar/vaadin-avatar";
+import "@vaadin/vaadin-context-menu";
+import "@vaadin/vaadin-tabs";
+import "@vaadin/vaadin-tabs/vaadin-tab";
+
+import "./top-navbar";
+import "./bottom-navbar";
+import { routes } from "../router/routes";
+
+import "@vaadin/vaadin-lumo-styles/color.js";
+import "@vaadin/vaadin-lumo-styles/spacing.js";
+import "@vaadin/vaadin-lumo-styles/typography.js";
+import "@vaadin/vaadin-app-layout/vaadin-app-layout.js";
+import "@vaadin/vaadin-app-layout/vaadin-drawer-toggle.js";
+import "@vaadin/vaadin-tabs/vaadin-tabs.js";
+import "@vaadin/vaadin-tabs/vaadin-tab.js";
+//import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
+//import "../themes/yld0-theme/layout-styles.js";
+
+import { getClient } from "../store/client";
+
+@customElement("app-index")
 export class AppIndex extends LitElement {
-  @query('main')
-  private main!: HTMLElement;
+    @query("main")
+    private main!: HTMLElement;
 
-  static styles = css`
-    :host {
-      display: flex;
-      flex-direction: column;
-    }
+    @state()
+    protected location?: RouterLocation;
 
-    header {
-      display: flex;
-      align-items: center;
-      height: 53px;
-      padding: 0 1rem;
-      background-color: #24292e;
-    }
+    @property({ type: Boolean, reflect: true }) dark;
 
-    header nav {
-      display: flex;
-      flex: 1;
-      align-self: stretch;
-    }
+    @property({ type: Object }) location2 = router.location;
 
-    header nav a {
-      display: flex;
-      align-items: center;
-      color: #fff;
-      font-weight: 600;
-      text-decoration: none;
-    }
+    static styles = css`
+        :host {
+            display: flex;
+            flex-direction: column;
+        }
 
-    header nav a:not(:last-child) {
-      margin-right: 1rem;
-    }
+        header {
+            display: flex;
+            align-items: center;
+            height: 53px;
+            padding: 0 1rem;
+        }
 
-    header nav a:hover {
-      color: #bbb;
-    }
+        header nav {
+            display: flex;
+            flex: 1;
+            align-self: stretch;
+        }
 
-    main,
-    main > * {
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-    }
+        header nav a {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+        }
 
-    footer {
-      padding: 1rem;
-      text-align: center;
-      background-color: #eee;
-    }
+        header nav a:not(:last-child) {
+            margin-right: 1rem;
+        }
 
-    main:empty ~ footer {
-      display: none;
-    }
-  `;
+        header nav a:hover {
+            color: #bbb;
+        }
 
-  render() {
-    return html`
-      <header>
-        <nav>
-          <a href="${urlForName('home')}">Home</a>
-          <a href="${urlForName('about')}">About</a>
-        </nav>
+        main,
+        main > * {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
 
-        <pwa-install-button>
-          <button>Install app</button>
-        </pwa-install-button>
+        footer {
+            padding: 1rem;
+            text-align: center;
+            background-color: #eee;
+        }
 
-        <pwa-update-available>
-          <button>Update app</button>
-        </pwa-update-available>
-      </header>
+        main:empty ~ footer {
+            display: none;
+        }
 
-      <!-- The main content is added / removed dynamically by the router -->
-      <main role="main"></main>
+        /* main:not([dark]) {
+            
+        } */
+        main[dark] {
+            color: var(--lumo-primary-text-color);
+            --lumo-font-family: -apple-system, BlinkMacSystemFont;
+            --lumo-base-color: rgb(54, 67, 83);
+            --lumo-primary-text-color: rgb(230, 175, 46);
+            --lumo-primary-color-50pct: rgba(230, 175, 46, 0.5);
+            --lumo-primary-color-10pct: rgba(230, 175, 46, 0.1);
+            --lumo-primary-color: #e6af2e;
+            --lumo-success-text-color: rgb(164, 175, 105);
+            --lumo-success-color-50pct: rgba(164, 175, 105, 0.5);
+            --lumo-success-color-10pct: rgba(164, 175, 105, 0.1);
+            --lumo-success-color: #a4af69;
+            --lumo-error-text-color: rgba(255, 250, 252, 0.99);
+            --lumo-error-color-50pct: rgba(162, 37, 34, 0.5);
+            --lumo-error-color-10pct: rgba(162, 37, 34, 0.1);
+            --lumo-error-color: #a22522;
+        }
 
-      <footer>
-        <span>Environment: ${config.environment}</span>
-      </footer>
+        /* Page and Routing Animation */
+
+        @keyframes slideFromRight {
+            0% {
+                transform: translateX(80%);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideFromLeftZero {
+            0% {
+                transform: translateX(-20%);
+            }
+            100% {
+                transform: translateX(0%);
+            }
+        }
+
+        @keyframes slideFromLeft {
+            0% {
+                transform: translateX(10%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes slideFromTop {
+            0% {
+                transform: translateY(5%);
+            }
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* Because of the menu we need to slide the entering parent into place */
+
+        /* 
+            Animated Page requirements
+
+            - Main pages (bottom navigation) should not slide 
+            - child pages should slide
+
+            Problem: child pages cant slide out because it would make main page animation
+            looks a bit shoddy with a partial slide.
+
+            A fadeIn / out or main pages + a child slide in is the best we can do here.
+
+        */
+
+        main > .entering {
+            /* This style is programmitically flipped when child pages are clicked */
+            animation: fadeIn 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            z-index: 200;
+        }
+
+        main > .leaving {
+            animation: fadeOut 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            z-index: 100;
+        }
+
+        main > .child-entering {
+            animation: slideFromRight 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            z-index: 100;
+        }
+
+        /* End Page and Routing Animation */
     `;
-  }
 
-  firstUpdated() {
-    attachRouter(this.main);
-  }
+    #checked(event) {
+        this.dark = event.target.checked;
+        const eDark = new CustomEvent("dark", {
+            bubbles: true,
+            composed: true,
+            detail: "dark",
+        });
+        const eLight = new CustomEvent("light", {
+            bubbles: true,
+            composed: true,
+            detail: "light",
+        });
+        event.target.checked ? this.dispatchEvent(eDark) : this.dispatchEvent(eLight);
+    }
+
+    constructor() {
+        super();
+        //  document.querySelector("apollo-client");
+        //import { client } from "./global-apollo-client";
+        //window.__APOLLO_CLIENT__ = client;
+        // document.querySelector("apollo-client").client = getClient();
+    }
+
+    firstUpdated() {
+        attachRouter(this.main);
+    }
+
+    render() {
+        return html`
+            <!-- The main content is added / removed dynamically by the router -->
+            <apollo-client>
+                <main role="main" ?dark="${this.dark}"></main>
+            </apollo-client>
+
+            <!-- slot, just in case -->
+            <slot></slot>
+        `;
+    }
 }

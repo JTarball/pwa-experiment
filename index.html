@@ -12,7 +12,7 @@ LICENSE file in the root directory of this source tree.
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <title>MyApplication</title>
+    <title>yld0</title>
     <meta name="description" content="MyApplication description" />
 
     <base href="/" />
@@ -21,7 +21,9 @@ LICENSE file in the root directory of this source tree.
 
     <link rel="manifest" href="manifest.webmanifest" />
 
-    <meta name="theme-color" content="#000000" />
+    <link rel="import" href="lumo.html">
+
+    <meta name="theme-color" content="#364353" />
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -70,13 +72,145 @@ LICENSE file in the root directory of this source tree.
         display: block;
         margin: 1em;
       }
+
+      :root {
+        --lumo-font-size-tiny: 0.8em;
+        --lumo-font-size-micro: 0.67rem;
+      }
+      
     </style>
   </head>
   <body>
+    <!-- <custom-style>
+      <style>
+
+          
+[theme~="dark"] {
+
+    --lumo-primary-text-color: rgb(230, 175, 46);
+  --lumo-primary-color-50pct: rgba(230, 175, 46, 0.5);
+  --lumo-primary-color-10pct: rgba(230, 175, 46, 0.1);
+  --lumo-primary-color: #E6AF2E;
+  --lumo-success-text-color: rgb(164, 175, 105);
+  --lumo-success-color-50pct: rgba(164, 175, 105, 0.5);
+  --lumo-success-color-10pct: rgba(164, 175, 105, 0.1);
+  --lumo-success-color: #A4AF69;
+  --lumo-error-text-color: rgba(255, 250, 252, 0.99);
+  --lumo-error-color-50pct: rgba(162, 37, 34, 0.5);
+  --lumo-error-color-10pct: rgba(162, 37, 34, 0.1);
+  --lumo-error-color: #A22522;
+
+}
+      </style>
+  </custom-style>  -->
     <app-index></app-index>
 
     <noscript>Please enable JavaScript to view this website.</noscript>
 
     <script type="module" src="src/components/app-index.ts"></script>
+
+
+
+
+
+    <!-- // Import all Lumo CSS custom properties into the global style scope
+    import '@vaadin/vaadin-lumo-styles/color';
+    import '@vaadin/vaadin-lumo-styles/typography';
+    import '@vaadin/vaadin-lumo-styles/sizing';
+    import '@vaadin/vaadin-lumo-styles/spacing';
+    import '@vaadin/vaadin-lumo-styles/style';
+    import 'lumo-css-framework/all-classes.css';
+    // prettier-ignore -->
+    
+
+
+<script>
+
+const body = document.querySelector('body')
+const app = document.querySelector('app-index')
+//const pagehome = app.querySelector('page-home')
+const config = { attributes: true, childList: false, subtree: false }
+
+const callback = (mutationsList, observer) => {
+  for(let mutation of mutationsList) {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'dark') {
+        /* app.hasAttribute('dark') ? 
+          body.setAttribute('dark', '') :
+          body.removeAttribute('dark') */
+    }
+    if (mutation.type === 'attributes' && mutation.attributeName === 'light') {
+        /* app.hasAttribute('light') ? 
+          body.setAttribute('light', '') :
+          body.removeAttribute('light') */
+    }
+  }
+}
+
+const setLight = () => {
+  //console.log('danvirlight', pagehome)
+  app.setAttribute('light', '')
+  app.removeAttribute('dark')
+  body.setAttribute('light', '')
+  body.removeAttribute('dark')
+  // pagehome?.setAttribute('light', '')
+  // pagehome?.removeAttribute('dark')
+}
+
+const setDark = () => {
+  app.setAttribute('dark', '')
+  app.removeAttribute('light')
+  body.setAttribute('dark', '')
+  body.removeAttribute('light')
+  // pagehome?.setAttribute('dark', '')
+  // pagehome?.removeAttribute('light')
+}
+
+
+
+const observer = new MutationObserver(callback)
+
+// Check if dark mode is supported by browser
+if (window.matchMedia('(prefers-color-scheme)').media !== 'not all') {
+    console.log('@DARK-MODE >> Supported 🎉')
+
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setDark()
+    } else {
+      setLight()
+    }
+
+    // init the observer to dark attribute
+    observer.observe(app, config)
+    
+    // init listening to dark scheme
+    window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
+      if (e.matches) {
+        setDark()
+        console.log(`@DARK-MODE >> 🌒 ON`)
+      }
+    })
+
+    // init listening to light scheme
+    window.matchMedia('(prefers-color-scheme: light)').addListener((e) => {
+      if (e.matches) {
+        setLight()
+        console.log(`@LIGHT-MODE >> 🌕 ON`)
+      }
+    })
+
+  } else {
+    console.log('@DARK-MODE >> NOT Supported 🤢')
+  }
+
+  // listen for the dark event, set the dark / light theme from app element
+  window.addEventListener('dark', () => {
+    setDark()
+  })
+  window.addEventListener('light', () => {
+    setLight()
+  })
+</script>
+
+    </script>
   </body>
 </html>

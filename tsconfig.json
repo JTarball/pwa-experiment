@@ -4,6 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "declaration": true,
+    "outDir": "out",
     "sourceMap": true,
     "importHelpers": true,
     "inlineSources": true,

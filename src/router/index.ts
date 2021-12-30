@@ -5,29 +5,53 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Router } from '@vaadin/router';
-import type { Params } from '@vaadin/router';
+import { Router } from "@vaadin/router";
+import type { Params } from "@vaadin/router";
 
-import { routes } from './routes.js';
+import { routes } from "./routes.js";
 
-const router = new Router();
+export const router = new Router();
 
 router.setRoutes([
-  // Redirect to URL without trailing slash
-  {
-    path: '(.*)/',
-    action: (context, commands) => {
-      const newPath = context.pathname.slice(0, -1);
-      return commands.redirect(newPath);
+    // Redirect to URL without trailing slash
+    {
+        path: "(.*)/",
+        action: (context, commands) => {
+            const newPath = context.pathname.slice(0, -1);
+            return commands.redirect(newPath);
+        },
     },
-  },
-  ...routes,
+    ...routes,
 ]);
 
 export const attachRouter = (outlet: HTMLElement) => {
-  router.setOutlet(outlet);
+    router.setOutlet(outlet);
 };
 
 export const urlForName = (name: string, params?: Params) => {
-  return router.urlForName(name, params);
+    return router.urlForName(name, params);
+};
+
+export const titleForName = (name: string) => {
+    return routes.filter((route) => route.name == name)[0]?.title;
+};
+
+export const getLocation = () => {
+    return router.location;
+};
+
+export const goPath = (url: string, searchParamsUrl: string) => {
+    Router.go({
+        pathname: url,
+        search: searchParamsUrl,
+    });
+};
+
+export const getBackUrl = () => {
+    console.log("getBackUrl");
+    const urlSearchParams = new URLSearchParams(router.location?.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    const backurl = params.backurl || "";
+    console.log("backurl: ", backurl);
+    return backurl;
 };

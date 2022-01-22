@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="77px" height="77px" viewBox="0 0 77 77" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>server_error</title>
+    <g id="Page-error" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="iPhone-13-Pro-Max" transform="translate(-168.000000, -478.000000)">
+            <g id="Group" transform="translate(168.000000, 478.000000)">
+                <g id="loading" fill="#D8D8D8">
+                    <circle id="Oval" cx="38.5" cy="38.5" r="38.5"></circle>
+                </g>
+                <g id="server-svgrepo-com" transform="translate(16.000000, 15.000000)" fill-rule="nonzero">
+                    <g id="Group">
+                        <path d="M41.2628966,14.4842105 L2.73710345,14.4842105 C1.22593103,14.4842105 0,13.2522903 0,11.7337352 L0,2.75047535 C0,1.23192022 1.22593103,0 2.73710345,0 L41.2621379,0 C42.774069,0 44,1.23192022 44,2.75047535 L44,11.7329729 C44,13.2522903 42.774069,14.4842105 41.2628966,14.4842105 Z" id="Path" fill="#556080"></path>
+                        <path d="M41.2636077,28.9684211 L2.73715062,28.9684211 C1.22595216,28.9684211 0,27.7365008 0,26.2179457 L0,17.2346859 C0,15.7161307 1.22595216,14.4842105 2.73715062,14.4842105 L41.262849,14.4842105 C42.7748061,14.4842105 44,15.7161307 44,17.2346859 L44,26.2171834 C44.0007583,27.7365008 42.7748061,28.9684211 41.2636077,28.9684211 Z" id="Path" fill="#38454F"></path>
+                        <path d="M41.2636077,43 L2.73715062,43 C1.22595216,43 0,41.7680798 0,40.2495247 L0,31.2662648 C0,29.7477097 1.22595216,28.5157895 2.73715062,28.5157895 L41.262849,28.5157895 C42.7748061,28.5157895 44,29.7477097 44,31.2662648 L44,40.2487623 C44.0007583,41.7680798 42.7748061,43 41.2636077,43 Z" id="Path" fill="#556080"></path>
+                        <ellipse id="Oval" fill="#8697CB" cx="7.25773196" cy="7.24210526" rx="2.72164948" ry="2.71578947"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="36.9690722" cy="6.11052632" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="33.7938144" cy="6.11052632" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="38.3298969" cy="8.37368421" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="35.6082474" cy="8.37368421" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="31.0721649" cy="6.11052632" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="32.4329897" cy="8.37368421" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="27.8969072" cy="6.11052632" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="29.257732" cy="8.37368421" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="24.7216495" cy="6.11052632" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="26.5360825" cy="8.37368421" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="7.25773196" cy="21.7263158" rx="2.72164948" ry="2.71578947"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="36.9690722" cy="20.5947368" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="33.7938144" cy="20.5947368" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="38.3298969" cy="22.8578947" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="35.6082474" cy="22.8578947" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="31.0721649" cy="20.5947368" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="32.4329897" cy="22.8578947" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="27.8969072" cy="20.5947368" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="29.257732" cy="22.8578947" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="24.7216495" cy="20.5947368" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="26.5360825" cy="22.8578947" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="7.25773196" cy="35.7578947" rx="2.72164948" ry="2.71578947"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="36.9690722" cy="34.6263158" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="33.7938144" cy="34.6263158" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="38.3298969" cy="36.8894737" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="35.6082474" cy="36.8894737" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="31.0721649" cy="34.6263158" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="32.4329897" cy="36.8894737" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="27.8969072" cy="34.6263158" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="29.257732" cy="36.8894737" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="24.7216495" cy="34.6263158" rx="1" ry="1"></ellipse>
+                        <ellipse id="Oval" fill="#8697CB" cx="26.5360825" cy="36.8894737" rx="1" ry="1"></ellipse>
+                    </g>
+                    <g id="Group" transform="translate(26.000000, 18.000000)">
+                        <path d="M21.9107909,20 L1.08920906,20 C0.249877214,20 -0.273057286,19.0904801 0.149684721,18.3662003 L10.5600362,0.539259259 C10.9801416,-0.179753086 12.0189795,-0.179753086 12.4390849,0.539259259 L22.8503153,18.3662003 C23.2730573,19.0904801 22.7501228,20 21.9107909,20 Z" id="Path" fill="#EFC41A"></path>
+                        <path d="M12,14 C11.448,14 11,13.5968 11,13.1 L11,5.9 C11,5.4032 11.448,5 12,5 C12.552,5 13,5.4032 13,5.9 L13,13.1 C13,13.5968 12.552,14 12,14 Z" id="Path" fill="#FFFFFF"></path>
+                        <path d="M12,17 C11.74,17 11.48,16.8893082 11.29,16.7081761 C11.11,16.5169811 11,16.2553459 11,15.9937107 C11,15.7320755 11.11,15.4704403 11.29,15.2792453 C11.67,14.9069182 12.33,14.9069182 12.71,15.2792453 C12.89,15.4704403 13,15.7320755 13,15.9937107 C13,16.2553459 12.89,16.5169811 12.71,16.7081761 C12.52,16.8893082 12.27,17 12,17 Z" id="Path" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

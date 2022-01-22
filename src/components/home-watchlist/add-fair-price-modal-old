@@ -1,0 +1,158 @@
+/* Full Page Modal */
+import { LitElement, html, css, render } from "lit";
+import { customElement, query, property, state } from "lit/decorators.js";
+
+import "@vaadin/avatar";
+import "@vaadin/horizontal-layout";
+import "@vaadin/vertical-layout";
+import "@vaadin/form-layout";
+import "@vaadin/text-field";
+import { utility } from "@vaadin/vaadin-lumo-styles/utility";
+import { spacing } from "@vaadin/vaadin-lumo-styles/utilities/spacing.js";
+import { badge } from "@vaadin/vaadin-lumo-styles/badge.js";
+
+import { Chart, registerables } from "chart.js";
+Chart.register(...registerables);
+
+import { themeStyles } from "../../themes/yld0-theme/styles.js";
+import { transparentize, colour } from "../../helpers/utilities/chart_helpers.js";
+
+@customElement("add-fair-price-modal")
+class AddFairPriceModal extends LitElement {
+    // -- Start of state, properties, queries -- //
+
+    @property()
+    stock: Object;
+
+    @property()
+    private barChart?: Object;
+
+    // -- End of state etc -- //
+
+    // -- Styles -- //
+    static styles = [
+        badge,
+        utility,
+        spacing,
+        themeStyles,
+        css`
+            section {
+                padding: 1rem;
+                background: var(--lumo-base-color);
+                font-family: var(--lumo-font-family);
+                font-size: var(--lumo-font-size-s);
+                padding-bottom: 1rem;
+            }
+        `,
+    ];
+
+    // -- Lifecyle Functions -- //
+    async firstUpdated() {
+        const ctx = this.renderRoot.querySelector("#valuationBarChart").getContext("2d");
+
+        this.barChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: ["current", "dcf", "analyst low", "analyst mean", "analyst high"],
+                datasets: [],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: false,
+                    title: {
+                        display: true,
+                        text: "Valuations",
+                    },
+
+                    subtitle: {
+                        display: true,
+                        text: "Chart Subtitle",
+                        color: "blue",
+                        font: {
+                            size: 12,
+                            family: "tahoma",
+                            weight: "normal",
+                            style: "italic",
+                        },
+                        padding: {
+                            bottom: 10,
+                        },
+                    },
+                },
+                elements: {
+                    bar: {
+                        // backgroundColor: colorize(false),
+                        // borderColor: colorize(true),
+                        borderWidth: 10,
+                    },
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            drawOnChartArea: false,
+                        },
+                    },
+                    y: {
+                        grid: {
+                            drawOnChartArea: false,
+                        },
+                    },
+                },
+
+                // layout: {
+                //     padding: {
+                //         left: -10,
+                //     },
+                // },
+            },
+        });
+
+        //     const data = chart.data;
+        //     const dsColor = Utils.namedColor(chart.data.datasets.length);
+        //     const newDataset = {
+        //       label: 'Dataset ' + (data.datasets.length + 1),
+        //       backgroundColor: Utils.transparentize(dsColor, 0.1),
+        //       borderColor: dsColor,
+        //       borderWidth: 1,
+        //       data: Utils.numbers({count: data.labels.length, min: -100, max: 100}),
+        //     };
+        //     chart.data.datasets.push(newDataset);
+        //     chart.update();
+        //   }
+        // },
+
+        const data = this.barChart.data;
+        //const dsColor = namedColor(this.barChart.data.datasets.length);
+        //const dsColor = Utils.namedColor(chart.data.datasets.length);
+        const newDataset = {
+            label: "",
+            backgroundColor: [transparentize(colour(0), 0.1), transparentize(colour(1), 0.1), transparentize(colour(2), 0.1), transparentize(colour(3), 0.1), transparentize(colour(4), 0.1)],
+            borderColor: "rgb(255, 205, 86)",
+            borderWidth: 1,
+            data: [100, 300, 300, 1023.34],
+        };
+        this.barChart.data.datasets.push(newDataset);
+        this.barChart.update();
+    }
+
+    // -- Main render -- //
+    render() {
+        return html`
+            <section>
+                <vaadin-horizontal-layout style="align-this.items: center;" theme="spacing">
+                    <vaadin-avatar theme="xlarge" img="${this.stock?.logo_url}" name="${this.stock.symbol}" theme="xsmall"></vaadin-avatar>
+                    <vaadin-vertical-layout style="line-height: var(--lumo-line-height-m);">
+                        <span class="stockSymbol">${this.stock.symbol} </span>
+                        <span class="companyName">${this.stock.company_name}</span>
+                    </vaadin-vertical-layout>
+                </vaadin-horizontal-layout>
+
+                <!-- Bar Chart -->
+                <div>
+                    <canvas id="valuationBarChart" width="400" height="400"></canvas>
+                </div>
+            </section>
+        `;
+    }
+}

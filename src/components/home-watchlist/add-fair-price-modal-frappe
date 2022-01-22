@@ -1,0 +1,163 @@
+/* Full Page Modal */
+import { LitElement, html, css, render } from "lit";
+import { customElement, query, property, state } from "lit/decorators.js";
+
+import "@vaadin/avatar";
+import "@vaadin/horizontal-layout";
+import "@vaadin/vertical-layout";
+import "@vaadin/form-layout";
+import "@vaadin/text-field";
+import { utility } from "@vaadin/vaadin-lumo-styles/utility";
+import { spacing } from "@vaadin/vaadin-lumo-styles/utilities/spacing.js";
+import { badge } from "@vaadin/vaadin-lumo-styles/badge.js";
+
+// import { Chart } from "frappe-charts/dist/frappe-charts.esm.js";
+// import "frappe-charts/dist/frappe-charts.min.css";
+import { Chart } from "frappe-charts";
+
+import { themeStyles } from "../../themes/yld0-theme/styles.js";
+//import { transparentize, colour } from "../../helpers/utilities/chart_helpers.js";
+
+import "../generic/alerts";
+
+@customElement("add-fair-price-modal")
+class AddFairPriceModal extends LitElement {
+    // -- Start of state, properties, queries -- //
+
+    @property()
+    stock: Object;
+
+    @query(".barChart")
+    chart!: HTMLElement;
+
+    @query("generic-alert")
+    help!: HTMLElement;
+
+    // -- End of state etc -- //
+
+    // -- Styles -- //
+    static styles = [
+        badge,
+        utility,
+        spacing,
+        themeStyles,
+        css`
+            section {
+                padding: 0.5rem;
+                background: var(--lumo-base-color);
+                font-family: var(--lumo-font-family);
+                font-size: var(--lumo-font-size-s);
+                padding-bottom: 1rem;
+            }
+
+            /* Medium Devices, Desktops */
+            @media only screen and (min-width: 992px) {
+                section {
+                    max-width: 768px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    padding: 2rem;
+                }
+            }
+
+            .help {
+                margin-left: auto;
+            }
+        `,
+    ];
+
+    // -- Lifecyle Functions -- //
+    async firstUpdated() {
+        const data = {
+            labels: ["Your valuation", "DCF", "Analyst Low", "Analyst Mean", "Analyst High"],
+            datasets: [{ values: [230.0, 306.0, 325.0, 446.0] }],
+            yMarkers: [
+                {
+                    label: "current price",
+                    value: 310,
+                    options: { labelPos: "left" }, // default: 'right'
+                },
+            ],
+            yRegions: [
+                {
+                    label: "20% under DCF",
+                    start: 306.0,
+                    end: 306.0 * 0.8,
+                    options: { labelPos: "right" },
+                },
+            ],
+        };
+
+        // new Chart("#barChart", {
+        //     data: data,
+        //     type: "bar",
+        //     height: 200,
+        //     colors: ["red"],
+        // });
+
+        const chart = new Chart(this.chart, {
+            title: "Valuations",
+            data: data,
+            type: "bar",
+            height: 340,
+            // isNavigable: true,
+            //colors: ["#7cd6fd", "#743ee2", "#fff"],
+            barOptions: {
+                spaceRatio: 0.1,
+                stacked: true,
+            },
+            valuesOverPoints: 1,
+            axisOptions: {
+                xAxisMode: "tick",
+                yAxisMode: "tick",
+            },
+            tooltipOptions: {
+                formatTooltipX: (d) => (d + "").toUpperCase(),
+                formatTooltipY: (d) => d + " pts",
+            },
+        });
+
+        // chart.parent.addEventListener("data-select", (e) => {
+        //     // update_moon_data(e.index); // e contains index and value of current datapoint
+        //     console.log(e.index);
+        // });
+    }
+
+    // -- Main render -- //
+    render() {
+        return html`
+            <link rel="stylesheet" href="https://unpkg.com/frappe-charts@1.6.1/dist/frappe-charts.min.css" />
+            <section>
+                <vaadin-horizontal-layout style="align-this.items: center;" theme="spacing">
+                    <vaadin-avatar theme="xlarge" img="${this.stock?.logo_url}" name="${this.stock.symbol}" theme="xsmall"></vaadin-avatar>
+                    <vaadin-vertical-layout style="line-height: var(--lumo-line-height-m);">
+                        <span class="stockSymbol">${this.stock.symbol} </span>
+                        <span class="companyName">${this.stock.company_name}</span>
+                    </vaadin-vertical-layout>
+                    <div class="help">
+                        <vaadin-button
+                            @click="${() => {
+                                this.help._wrapper.classList.remove("closed");
+                            }}"
+                            theme="icon"
+                            aria-label="Show help"
+                        >
+                            <vaadin-icon icon="vaadin:question-circle"></vaadin-icon>
+                        </vaadin-button>
+                    </div>
+                </vaadin-horizontal-layout>
+
+                <generic-alert title="Add a valuation" description="Specify what you believe to be the fair price for ${this.stock.company_name}.">
+                    <p style="font-size: var(--lumo-font-size-tiny);">Analyst estimations and the Discounted Cash Flow have been provided to you as a guide.</p>
+                </generic-alert>
+
+                <!-- Bar Chart -->
+                <div style="padding: 0.1rem;">
+                    <div class="barChart"></div>
+                </div>
+
+                <!-- is highly recommended   Adding notes as to why you set the price as such will allow you to review your valuations over a prolonged period of time -->
+            </section>
+        `;
+    }
+}

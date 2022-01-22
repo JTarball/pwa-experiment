@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="207px" height="70px" viewBox="0 0 207 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>yld0</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="play/ic_launcher_APP" transform="translate(-120.000000, -374.000000)">
+            <g id="Group" transform="translate(120.000000, 344.000000)">
+                <g id="yld0" transform="translate(44.000000, 16.000000)" fill="#737373" fill-rule="nonzero" font-family="LucidaGrande-Bold, Lucida Grande" font-size="72" font-weight="bold">
+                    <g id="yld0">
+                        <text id="yld">
+                            <tspan x="0" y="70">yld</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g id="arrow-point-to-down" transform="translate(0.000000, 66.000000)" fill="#737373" fill-rule="nonzero">
+                    <polygon id="Path" points="0 0 44 0 21.9996735 22"></polygon>
+                </g>
+                <g transform="translate(114.000000, 0.000000)" fill="#FFFFFF">
+                    <line x1="15.5" y1="7.5" x2="20.5" y2="15.5" id="Line-2"></line>
+                    <path d="M20.5,15.5 L36.5,0.5 M0.5,20.5 L15.5,7.5" id="Line-4"></path>
+                </g>
+                <text id="O" stroke="#979797" fill="#737373" fill-rule="nonzero" font-family="Krungthep" font-size="72" font-weight="bold" text-decoration="underline">
+                    <tspan x="160" y="88">O</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

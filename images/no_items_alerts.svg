@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="73px" height="73px" viewBox="0 0 73 73" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>loading</title>
+    <g id="Page-Loading" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="iPhone-13-Pro-Max" transform="translate(-168.000000, -372.000000)">
+            <g id="Group" transform="translate(168.000000, 372.000000)">
+                <g id="loading">
+                    <circle id="Oval" fill="#D8D8D8" cx="36.5" cy="36.5" r="36.5"></circle>
+                    <g id="logo" transform="translate(21.125750, 3.318182)" fill="#FAFAFA" fill-rule="nonzero" font-family="Krungthep" font-size="48" font-weight="bold" stroke="#FAFAFA" text-decoration="underline">
+                        <g id="O">
+                            <text>
+                                <tspan x="0" y="49">O</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <polygon id="Path" fill="#FAFAFA" fill-rule="nonzero" points="3.62942928 34.3371429 22.0352958 34.3371429 12.832226 43.3371429"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

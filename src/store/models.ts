@@ -1,5 +1,12 @@
 
 
+// Model for how a symbol is stored in local storage (Used in recently viewed)
+export interface RecentlyViewedSymbol {
+    symbol: String;
+}
+
+
+
 
 export interface Person {
     id: int = -1;

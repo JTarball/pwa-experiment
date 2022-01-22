@@ -41,6 +41,7 @@ class PageModal extends LitElement {
                 opacity: 0;
                 z-index: 100;
                 background-color: var(--lumo-base-color);
+                overflow: scroll;
             }
 
             .wrapper:not(.open) {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="114px" height="92px" viewBox="0 0 114 92" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>logo</title>
+    <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="iPhone-13-Pro-Max" transform="translate(-139.000000, -381.000000)" fill="#000000" fill-rule="nonzero">
+            <g id="Group" transform="translate(139.000000, 355.500000)">
+                <g id="logo" transform="translate(48.000000, 0.000000)" font-family="Krungthep" font-size="100" font-weight="bold" stroke="#000000" text-decoration="underline">
+                    <g id="O">
+                        <text>
+                            <tspan x="0" y="101">O</tspan>
+                        </text>
+                    </g>
+                </g>
+                <polygon id="Path" points="7.10542736e-15 63.8371429 47.9999999 63.8371429 23.9996438 87.8371429"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

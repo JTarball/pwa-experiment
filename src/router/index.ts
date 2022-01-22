@@ -10,6 +10,9 @@ import type { Params } from "@vaadin/router";
 
 import { routes } from "./routes.js";
 
+
+
+
 export const router = new Router();
 
 router.setRoutes([
@@ -55,3 +58,7 @@ export const getBackUrl = () => {
     console.log("backurl: ", backurl);
     return backurl;
 };
+
+
+
+

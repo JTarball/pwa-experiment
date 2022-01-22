@@ -1,8 +1,9 @@
 /* Full Page Modal */
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css, render } from "lit";
 import { customElement, state } from "lit/decorators.js";
 
 import { ApolloQueryController } from "@apollo-elements/core";
+import { ApolloMutationController } from "@apollo-elements/core/apollo-mutation-controller";
 
 import "@vaadin/avatar";
 import "@vaadin/horizontal-layout";
@@ -19,6 +20,8 @@ import "@vaadin/grid/vaadin-grid-selection-column.js";
 import "@vaadin/horizontal-layout";
 import "@vaadin/vertical-layout";
 import "@vaadin/menu-bar";
+import { Notification } from "@vaadin/notification";
+import { NotificationRenderer, NotificationOpenedChangedEvent } from "@vaadin/notification";
 
 import { utility } from "@vaadin/vaadin-lumo-styles/utility";
 import { spacing } from "@vaadin/vaadin-lumo-styles/utilities/spacing.js";
@@ -26,7 +29,8 @@ import { badge } from "@vaadin/vaadin-lumo-styles/badge.js";
 
 import { themeStyles } from "../../themes/yld0-theme/styles.js";
 import { GetStocks } from "./Stocks.query.graphql";
-import { getClient } from "../../store/client";
+import { AddFollow } from "./AddFollow.mutation.graphql.js";
+//import { getClient } from "../../store/client";
 
 @customElement("search-list")
 class SearchList extends LitElement {
@@ -34,11 +38,19 @@ class SearchList extends LitElement {
     @state()
     private searchVal: String = "";
 
+    @state()
+    private notificationOpened = false;
+
+    @state()
+    notificationSymbol = "";
+
     query = new ApolloQueryController(this, GetStocks, {
         variables: {
             name: this.searchVal,
         },
     });
+
+    addFollow = new ApolloMutationController(this, AddFollow);
 
     @state()
     private items_recent?: UserStock[];
@@ -127,8 +139,76 @@ class SearchList extends LitElement {
         console.log(window.localStorage);
     }
 
+    async handleAddFollow(symbol: string) {
+        console.log(symbol);
+        const { data, error, loading } = await this.addFollow.mutate({
+            variables: {
+                symbol: symbol,
+            },
+        });
+
+        if (!error && !loading) {
+            // var event = new CustomEvent("data-changed", {
+            //     detail: {},
+            // });
+            // this.dispatchEvent(event);
+
+            // Close modal
+            // this.parentElement?.removeAttribute("open");
+
+            this.parentElement?._wrapper.classList.add("closing");
+
+            // Lazy way to wait for css slide out transition
+            setTimeout(() => {
+                const closed = new CustomEvent("closed", {
+                    detail: {
+                        value: false,
+                    },
+                });
+                this.parentElement?.dispatchEvent(closed);
+                this.parentElement?._wrapper.classList.remove("closing");
+                this.notificationOpened = true;
+                this.notificationSymbol = symbol;
+
+                //Notification.show(`Added ${symbol} to your watchlist.`);
+            }, 500);
+        }
+
+        console.log(data, error, loading);
+    }
+
+    renderer: NotificationRenderer = (root) => {
+        render(
+            html`
+                <vaadin-horizontal-layout style="align-items: center;">
+                    <div>Added ${this.notificationSymbol} to your watchlist.</div>
+                    <!-- <vaadin-button style="margin-left: var(--lumo-space-xl);" theme="primary" @click="${() => (this.notificationOpened = false)}"> Undo ${this.isMac
+                        ? "⌘"
+                        : "Ctrl-"}Z </vaadin-button> -->
+                    <!-- Ideally, this should be hidden if the
+                     device does not have a physical keyboard -->
+                </vaadin-horizontal-layout>
+            `,
+            root
+        );
+    };
+
     render() {
         return html`
+            <vaadin-notification
+                theme="contrast"
+                duration="2000"
+                .opened="${this.notificationOpened}"
+                @opened-changed="${(e: NotificationOpenedChangedEvent) => {
+                    this.notificationOpened = e.detail.value;
+                }}"
+                .renderer="${this.renderer}"
+            ></vaadin-notification>
+
+
+
+
+
             <vaadin-text-field
                 id="searchfield"
                 style="
@@ -191,7 +271,13 @@ class SearchList extends LitElement {
 
                                                                   <td style="width: 10%;">
                                                                       <vaadin-vertical-layout style="line-height: var(--lumo-line-height-m);">
-                                                                          <vaadin-button id="addToWatch">Add to alerts</vaadin-button>
+                                                                          <vaadin-button
+                                                                              id="addToWatch"
+                                                                              @click="${() => {
+                                                                                  this.handleAddFollow(item.symbol);
+                                                                              }}"
+                                                                              >Add to alerts</vaadin-button
+                                                                          >
                                                                       </vaadin-vertical-layout>
                                                                   </td>
                                                               </tr>
@@ -200,7 +286,7 @@ class SearchList extends LitElement {
                                                     : html`
                                                           ${this.items_recent?.map((item, index) => {
                                                               return html`
-                                                                  <tr role="row" index="${index}" @click=${(e) => this.handleRowClick(e, item)}>
+                                                                  <tr role="row" index="${index}">
                                                                       <td style="width: 65%;">
                                                                           <vaadin-horizontal-layout style="align-items: center;" theme="spacing">
                                                                               <vaadin-avatar img="${item?.logo_url}" name="${item.symbol}" theme="xsmall"></vaadin-avatar>
@@ -213,7 +299,13 @@ class SearchList extends LitElement {
 
                                                                       <td style="width: 10%;">
                                                                           <vaadin-vertical-layout style="line-height: var(--lumo-line-height-m);">
-                                                                              <vaadin-button id="addToWatch">Watch</vaadin-button>
+                                                                              <vaadin-button
+                                                                                  id="addToWatch"
+                                                                                  @click="${() => {
+                                                                                      this.handleAddFollow(item.symbol);
+                                                                                  }}"
+                                                                                  >Watch</vaadin-button
+                                                                              >
                                                                           </vaadin-vertical-layout>
                                                                       </td>
                                                                   </tr>

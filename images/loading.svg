@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="77px" height="77px" viewBox="0 0 77 77" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>loading</title>
+    <g id="Page-Loading" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="iPhone-13-Pro-Max" transform="translate(-168.000000, -372.000000)">
+            <g id="Group" transform="translate(168.000000, 372.000000)">
+                <circle id="Oval" fill="#D8D8D8" cx="38.5" cy="38.5" r="38.5"></circle>
+                <g id="logo" transform="translate(22.283325, 3.500000)" fill="#FAFAFA" fill-rule="nonzero" font-family="Krungthep" font-size="48" font-weight="bold" stroke="#FAFAFA" text-decoration="underline">
+                    <g id="O">
+                        <text>
+                            <tspan x="0" y="49">O</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

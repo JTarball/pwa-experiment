@@ -33,6 +33,7 @@ import "@vaadin/vaadin-lumo-styles/vaadin-iconset";
 import "@vaadin/icon";
 
 import "../components/alerts.js";
+import "../components/home-alerts/alerts";
 
 @customElement("page-alerts")
 export class PageAlerts extends PageElement {
@@ -78,11 +79,12 @@ export class PageAlerts extends PageElement {
 
     render() {
         return html`
-            <top-navbar .location=${this.location} ?dark="${this.dark}" @searchopen-changed=${this.handleModalOpen}></top-navbar>
+            <top-navbar .location=${this.location} ?dark="${this.dark}" searchEnabled @searchopen-changed=${this.handleModalOpen}></top-navbar>
 
             <!-- The main content is added / removed dynamically by the router -->
             <section>
-                <alerts-home @row-clicked=${this.handleModalOpen}></alerts-home>
+                <home-alerts @addfollow-clicked=${this.handleModalOpen}></home-alerts>
+                <!-- <alerts-home @row-clicked=${this.handleModalOpen}></alerts-home> -->
             </section>
 
             <!-- slot, just in case -->

@@ -5,7 +5,7 @@
  */
 
 import { html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, query } from "lit/decorators.js";
 
 import "@vaadin/vaadin-lumo-styles/utility";
 
@@ -18,8 +18,8 @@ import "../components/yld0-tabs";
 import "../components/yld0-tab";
 import "../components/yld0-tabitem";
 import "../components/tabs/insight-trends";
-import "../components/tabs/home-watchlist";
-import "../components/tabs/home-recent";
+import "../components/home-watchlist/watchlist";
+import "../components/home-recent/recent";
 
 import { themeStyles } from "../themes/yld0-theme/styles.js";
 import { utility } from "@vaadin/vaadin-lumo-styles/utility";
@@ -35,6 +35,9 @@ export class PageHome extends PageElement {
     @property()
     private modalRenderer: TemplateResult;
 
+    @query("home-watchlist")
+    _watchlist: Element;
+
     static styles = [
         utility,
         themeStyles,
@@ -48,10 +51,11 @@ export class PageHome extends PageElement {
             } */
 
             section {
-                padding: 1rem;
+                padding: 0.8rem;
                 background: var(--lumo-base-color);
                 font-family: var(--lumo-font-family);
                 font-size: var(--lumo-font-size-s);
+                padding-bottom: 1rem;
             }
         `,
     ];
@@ -62,15 +66,25 @@ export class PageHome extends PageElement {
         this.modalRenderer = e.detail.modalRenderer;
     }
 
+    private handleModalClose(e: Event) {
+        this.modalOpen = false;
+    }
+
+    async lemon(e: Event) {
+        console.log("lemon");
+        this.modalOpen = e.detail.value;
+        await this._watchlist.query.refetch();
+    }
+
     render() {
         return html`
-            <top-navbar .location=${this.location} ?dark="${this.dark}" @searchopen-changed=${this.handleModalOpen}></top-navbar>
+            <top-navbar .location=${this.location} ?dark="${this.dark}" searchEnabled @searchopen-changed=${this.handleModalOpen}></top-navbar>
 
             <!-- The main content is added / removed dynamically by the router -->
             <section>
                 <yld0-tabs>
                     <yld0-tab title="Watching">
-                        <home-watchlist></home-watchlist>
+                        <home-watchlist @addvaluation-clicked=${this.handleModalOpen} @addfollow-clicked=${this.handleModalOpen}></home-watchlist>
                     </yld0-tab>
                     <yld0-tab title="Recently Viewed">
                         <home-recent></home-recent>
@@ -82,7 +96,7 @@ export class PageHome extends PageElement {
             <slot></slot>
 
             <!-- page modal -->
-            <page-modal .title="${this.modalTitle}" ?open="${this.modalOpen}" @closed="${(e: CustomEvent) => (this.modalOpen = e.detail.value)}"> ${this.modalRenderer}</page-modal>
+            <page-modal .title="${this.modalTitle}" ?open="${this.modalOpen}" @closed="${this.lemon}"> ${this.modalRenderer}</page-modal>
 
             <!-- The bottom tabs -->
             <bottom-navbar .location=${this.location}></bottom-navbar>

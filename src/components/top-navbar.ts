@@ -1,6 +1,6 @@
 import type { RouterLocation } from "@vaadin/router";
 import { LitElement, html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state, query } from "lit/decorators.js";
 import { cache } from "lit/directives/cache.js";
 
 import "@vaadin/app-layout";
@@ -21,6 +21,7 @@ import { goPath, getBackUrl } from "../router/index.js";
 
 import { themeStyles } from "../themes/yld0-theme/styles.js";
 import { utility } from "@vaadin/vaadin-lumo-styles/utility";
+import { logoutUser } from "../auth/auth.js";
 
 import "./search/search";
 
@@ -32,7 +33,15 @@ export class TopNavBar extends LitElement {
     @property()
     subtitle: String = "";
 
+    @property()
+    searchEnabled: Boolean = false;
+
+    @property({ type: Boolean, reflect: true }) drawerOpened = false;
+
     @property({ type: Boolean, reflect: true }) dark = true;
+
+    @query("vaadin-app-layout")
+    private layout!: HTMLElement;
 
     static styles = [
         themeStyles,
@@ -168,6 +177,19 @@ export class TopNavBar extends LitElement {
         goPath(url);
     }
 
+    private async handleLogout() {
+        await logoutUser();
+        goPath("/login", "");
+    }
+
+    private firstUpdated() {
+        // Workaround for the following:
+        //  true, for desktop size views
+        //  false, for mobile size views
+        // We want to set it to close always by default
+        this.layout?.removeAttribute("drawer-opened");
+    }
+
     render() {
         return html`
             <vaadin-app-layout primary-section="drawer">
@@ -175,7 +197,13 @@ export class TopNavBar extends LitElement {
                     ${
                         getBackUrl()
                             ? html`<vaadin-icon id="back" icon="lumo:angle-left" @click=${(e) => this.goBack(e, getBackUrl())}></vaadin-icon>`
-                            : html`<vaadin-drawer-toggle @click=${this.setDarkMode} aria-label="Menu toggle" class="text-secondary" theme="contrast"></vaadin-drawer-toggle>`
+                            : html`<vaadin-drawer-toggle
+                                  slot="navbar [touch-optimized]"
+                                  @click=${this.setDarkMode}
+                                  aria-label="Menu toggle"
+                                  class="text-secondary"
+                                  theme="contrast"
+                              ></vaadin-drawer-toggle>`
                     } 
                     <div style="width: 50%">
                     <vaadin-vertical-layout style="line-height: var(--lumo-line-height-m);">
@@ -186,8 +214,11 @@ export class TopNavBar extends LitElement {
                        
                     </vaadin-vertical-layout>
                     </div>
-                    <img src = "images/yld0-icon.svg" alt="My Happy SVG" style="width:50px;"/>
+                    <!-- <img src = "images/yld0-icon.svg" alt="My Happy SVG" style="width:50px;"/> -->
+                    <!-- ${this.searchEnabled ? html`<vaadin-icon id="search" icon="lumo:search" @click=${this._clickSearch}></vaadin-icon>` : html``} -->
                     <vaadin-icon id="search" icon="lumo:search" @click=${this._clickSearch}></vaadin-icon>
+
+
                 </header>
                 <section class="flex flex-col items-stretch max-h-full min-h-full" slot="drawer">
                     <h2 class="flex items-center h-xl m-0 px-m text-m">Danvir Guram</h4>
@@ -213,7 +244,7 @@ export class TopNavBar extends LitElement {
 
                     <footer>
                         <div class="menu-footer-signout">
-                            <vaadin-button class="m-xl mx-auto" theme="large primary">Sign Out</vaadin-button>
+                            <vaadin-button class="m-xl mx-auto" theme="large primary" @click="${this.handleLogout}">Sign Out</vaadin-button>
                         </div>
                     </footer>
                 </section>

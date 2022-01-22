@@ -48,7 +48,7 @@ import "@vaadin/vaadin-tabs/vaadin-tab.js";
 //import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 //import "../themes/yld0-theme/layout-styles.js";
 
-import { getClient } from "../store/client";
+//import { getClient } from "../store/client";
 
 @customElement("app-index")
 export class AppIndex extends LitElement {
@@ -256,13 +256,15 @@ export class AppIndex extends LitElement {
 
     render() {
         return html`
-            <!-- The main content is added / removed dynamically by the router -->
-            <apollo-client>
-                <main role="main" ?dark="${this.dark}"></main>
-            </apollo-client>
+            <vaadin-app-layout primary-section="navbar|drawer">
+                <!-- The main content is added / removed dynamically by the router -->
+                <apollo-client>
+                    <main role="main" ?dark="${this.dark}"></main>
+                </apollo-client>
 
-            <!-- slot, just in case -->
-            <slot></slot>
+                <!-- slot, just in case -->
+                <slot></slot>
+            </vaadin-app-layout>
         `;
     }
 }

@@ -8,19 +8,41 @@ import { badge } from "@vaadin/vaadin-lumo-styles/badge.js";
 
 export const themeStyles = css`
 
+            /* Vaadin Components */
+            vaadin-button {
+                cursor: pointer;
+            
+            }
+
             /* Default section */
             section {
                 background: var(--lumo-base-color);
                 font-family: var(--lumo-font-family);
                 font-size: var(--lumo-font-size-xxs);
+                padding: 0.8rem;
+                padding-bottom: 1rem;
+        
             }
+
+
+            @media only screen and (min-width: 992px) {
+                section {
+                    max-width: 768px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    padding: 2rem;
+                }
+            }
+
 
             /* Theme styling for tables */
             table {
+                display: block;
                 border-collapse: collapse;
                 width: 100%;
                 margin-top: 20px;
                 margin-bottom: 60px;
+                padding-bottom: 100px;
             }
 
             table tr,
@@ -33,6 +55,12 @@ export const themeStyles = css`
                 padding-bottom: 8px;
                 text-align: center;
                 vertical-align: middle;
+            }
+
+            table tr.disabled{
+                pointer-events: none;
+                color: #f3eaea;
+                opacity: 0.2;
             }
 
             /* table thead tr {
@@ -130,9 +158,11 @@ export const themeStyles = css`
                 font-size: var(--lumo-font-size-tiny);
             }
 
-            table td span.companyName {
+            table td span.companyName, span.companyName {
                 font-size: var(--lumo-font-size-tiny);
                 color: var(--lumo-secondary-text-color);
+                padding: 0;
+                text-align: left;
             }
 
            table td span.description{
@@ -140,9 +170,16 @@ export const themeStyles = css`
                 color: var(--lumo-secondary-text-color);
             }
 
+            table td span.price {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
             table td span.priceChange {
                 font-size: var(--lumo-font-size-tiny);
                 animation: 1s 0.03s elasticExpand cubic-bezier(0.215, 0.61, 0.355, 1) both;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             table td span.ellipsis {
@@ -191,6 +228,116 @@ export const themeStyles = css`
             }
 
 
+            /* Loading animation */
+
+            .dot-stage {
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                height:100%;
+                min-height: 500px;
+            }
+
+            .dot {
+           
+                width: 15px;
+                height: 15px;
+                border-radius: 7.5px;
+                background-color: var(--lumo-primary-color-50pct);
+                color: var(--lumo-primary-color-50pct);
+                /* position: relative; */
+                animation: dotFlashing 2.5s ease-in-out infinite;
+                display: inline-block;
+                margin: 0.2em;
+            
+            }
+
+            .dot-0 {
+                animation-delay:0s;
+            }
+            .dot-1{
+                animation-delay:0.2s;
+            }
+            .dot-2{
+                animation-delay:0.4s;
+            }
+
+
+
+
+            @keyframes dotFlashing {
+
+                0%, 100%{
+                    transform: scale(0.95);
+                    opacity: 0.2;
+                    background-color: var(--lumo-primary-color-50pct);
+                }
+                40%{
+                    transform: scale(1);
+                    opacity: 0.5;
+                    background-color: var(--lumo-primary-color-50pct);
+                }
+                50%{
+                    transform: scale(1);
+                    opacity: 1;
+                    background-color: var(--lumo-primary-color-50pct);
+                }
+
+            }
+
+
+            .dot-flashing {
+                margin: 50px;
+                width: 10px;
+                height: 10px;
+                border-radius: 5px;
+                background-color: var(--lumo-primary-color-50pct);
+                color: var(--lumo-primary-color-50pct);
+                position: relative;
+                /* -webkit-animation: dotFlashing 1.6s infinite alternate;
+                -webkit-animation-delay: 0.75s;
+
+                animation: dotFlashing 1.6s infinite linear alternate;
+                animation-delay: 0.75s; */
+            }
+
+            .dot-flashing::before,
+            .dot-flashing::after {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                top: 0;
+            }
+
+            .dot-flashing::before {
+                left: -15px;
+                width: 10px;
+                height: 10px;
+                border-radius: 5px;
+                background-color: var(--lumo-primary-color-50pct);
+                color: var(--lumo-primary-color-50pct);
+                -webkit-animation: dotFlashing 1.5s infinite alternate;
+                -webkit-animation-delay: 0s;
+              
+                animation: dotFlashing 1.5s infinite alternate;
+                animation-delay: 0s;
+            }
+
+            .dot-flashing::after {
+                left: 15px;
+                width: 10px;
+                height: 10px;
+                border-radius: 5px;
+                background-color: var(--lumo-primary-color-50pct);
+                color: var(--lumo-primary-color-50pct);
+                -webkit-animation: dotFlashing 1.5s infinite alternate;
+                -webkit-animation-delay: 1.5s;
+
+                animation: dotFlashing 1.5s infinite alternate;
+                animation-delay: 1.5s;
+            }
+
+            /* */
 
             /* End of table styling */
 
@@ -200,6 +347,34 @@ export const themeStyles = css`
 
             /* Page animations */
 
+            /* Price Change */
+
+            .priceUp {
+                color: var(--lumo-success-color);
+            }
+
+            .priceDown {
+                color:  var(--lumo-error-color);
+            }
+
+            /* Icon for stock price changes */
+            .trendingUp {
+                border-radius: 50%;
+                transform: rotate(-135deg);
+                background-color: #ecf9f2;
+                color: var(--lumo-success-color);
+            }
+
+            .trendingDown {
+                border-radius: 50%;
+                transform: rotate(45deg);
+                background-color: #ffe6e8;
+                color: var(--lumo-error-color);
+            }
+
+            /* End of icon for stock price changes */
+
+            /* End of Price Change */
 
 
 
@@ -217,7 +392,7 @@ export const themeStyles = css`
         --lumo-base-color:hsla(214, 35%, 1%, 1)
         --lumo-primary-text-color: rgb(230, 175, 46);
         --lumo-primary-color-50pct: rgba(230, 175, 46, 0.5);
-        --lumo-primary-color-10pct: rgba(230, 175, 46, 0.1);
+        --lumo-primary-color-50pct: rgba(230, 175, 46, 0.1);
         --lumo-primary-color: #E6AF2E;
         --lumo-success-text-color: rgb(164, 175, 105);
         --lumo-success-color-50pct: rgba(164, 175, 105, 0.5);

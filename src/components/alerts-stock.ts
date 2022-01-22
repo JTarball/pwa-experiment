@@ -31,6 +31,7 @@ import { themeStyles } from "../themes/yld0-theme/styles.js";
 import { UserStock, UserStockAlert } from "../store/models.js";
 
 import "./add-alert-modal";
+import "./home-alerts/add-alert/select-stock";
 
 @customElement("alerts-stock")
 class YLD0AlertsStock extends LitElement {
@@ -262,33 +263,30 @@ class YLD0AlertsStock extends LitElement {
                                             ${this.minimalMode ? html`` : html`<span style="font-size: 0.6em;">${item.notes}</span>`}
                                             <span style="font-size: 0.6em;">
                                                 ${item.info}
-                                                ${
-                                                    this.minimalMode
-                                                        ? html``
-                                                        : html` ${item.notification_types?.map((nt, index) => {
-                                                              var output = " ";
-                                                              if (index == 0) {
-                                                                  output += "| ";
-                                                              }
+                                                ${this.minimalMode
+                                                    ? html``
+                                                    : html` ${item.notification_types?.map((nt, index) => {
+                                                          var output = " ";
+                                                          if (index == 0) {
+                                                              output += "| ";
+                                                          }
 
-                                                              output += nt;
+                                                          output += nt;
 
-                                                              return output;
-                                                          })}`
-                                                }</span
+                                                          return output;
+                                                      })}`}</span
                                             >
                                         </vaadin-vertical-layout>
                                     </vaadin-horizontal-layout>
                                 </td>
                                 <td style="width: 10%;">
                                     <paper-toggle-button class="yld0-toggle" ?checked=${!alert.enabled}>
-                           
                                         <!-- <vaadin-menu-bar theme="icon" .items="${this.items_menu}"></vaadin-menu-bar> -->
                                     </paper-toggle-button>
                                 </td>
                                 <td style="width: 10%;">
-                                      ${this.renderMenu(item)}
-                                    </paper-toggle-button>
+                                    ${this.renderMenu(item)}
+                                    <!-- </paper-toggle-button> -->
                                 </td>
                             </tr>
                         `;

@@ -34,6 +34,7 @@ import { badge } from "@vaadin/vaadin-lumo-styles/badge.js";
 import { themeStyles } from "../themes/yld0-theme/styles.js";
 import "../components/alerts-stock.js";
 import "../components/page-modal";
+import "../components/home-alerts/alerts-per-stock.js";
 
 @customElement("page-alerts-stock")
 export class PageAlerts extends PageElement {
@@ -87,7 +88,8 @@ export class PageAlerts extends PageElement {
 
             <!-- The main content is added / removed dynamically by the router -->
             <section>
-                <alerts-stock @editopen-changed=${this.handleModalOpen}></alerts-stock>
+                <!-- <alerts-stock @editopen-changed=${this.handleModalOpen}></alerts-stock> -->
+                <stock-detail-alerts></stock-detail-alerts>
             </section>
 
             <!-- slot, just in case -->

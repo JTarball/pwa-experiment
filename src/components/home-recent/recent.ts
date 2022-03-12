@@ -268,7 +268,7 @@ class HomeRecent extends LitElement {
                     ? html` <message-box loaded boxImg="" boxTitle="" boxSubtitle="No recently viewed items" help=""> </message-box> `
                     : html`
                           <!-- Main table data -->
-                          <table>
+                          <table class="yld0">
                               <thead>
                                   <tr style="border-color: var(--lumo-contrast-10pct);border-bottom-style: solid;border-bottom-width: 1px;"></tr>
                               </thead>

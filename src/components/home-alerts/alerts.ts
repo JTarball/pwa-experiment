@@ -21,7 +21,7 @@ import "@vaadin/vertical-layout";
 import "@vaadin/menu-bar";
 
 import { themeStyles } from "../../themes/yld0-theme/styles.js";
-import { GetFollows } from "./GetFollows.query.graphql.js";
+import { GetAlertFollows } from "./GetAlertFollows.query.graphql.js";
 import { DeleteFollow } from "../home-watchlist/DeleteFollow.query.graphql.js";
 import { renderLoading } from "../../helpers/utilities/graphql_helpers.js";
 
@@ -37,11 +37,20 @@ import "../generic/select";
 //import { truncate } from "../../helpers/utilities/helpers";
 //import "./add-fair-price-modal";
 
+import "../generic/toggle-button";
+import "../generic/toggle-group";
+import "../generic/help";
+import "../generic/help-tooltip";
+import { goPath } from "../../router/index.js";
+
 @customElement("home-alerts")
 class HomeAlerts extends LitElement {
     // A web component for tabularise a user's watchlist
 
     // -- State for some display options -- //
+
+    @state()
+    showLoading: Boolean = false;
 
     @state()
     private priceSelected?: String = "2";
@@ -60,7 +69,7 @@ class HomeAlerts extends LitElement {
     @state()
     private modalItem: Object;
 
-    query = new ApolloQueryController(this, GetFollows, {
+    query = new ApolloQueryController(this, GetAlertFollows, {
         fetchPolicy: "cache-and-network",
         showErrorStack: "json",
     });
@@ -94,6 +103,10 @@ class HomeAlerts extends LitElement {
                 background-color: #250902;
                 color: white;
                 font-size: var(--lumo-font-size-tiny);
+            }
+
+            table tr {
+                cursor: pointer;
             }
         `,
     ];
@@ -169,7 +182,13 @@ class HomeAlerts extends LitElement {
 
     private renderRow(item, index) {
         return html`
-            <tr role="row" index="${index}" @click=${this.goStock}>
+            <tr
+                role="row"
+                index="${index}"
+                @click=${() => {
+                    goPath("/alerts/" + item.symbol, "?backurl=/alerts");
+                }}
+            >
                 <td style="width: 90%;">
                     <vaadin-horizontal-layout style="align-this.items: center;" theme="spacing">
                         <vaadin-avatar img="${item?.logo_url}" name="${item.symbol}" theme="xsmall"></vaadin-avatar>
@@ -203,6 +222,18 @@ class HomeAlerts extends LitElement {
         `;
     }
 
+    private renderLastRow() {
+        return html`
+            <tr style="border: none;">
+                <td style="width: 55%;border: none;"></td>
+                <td style="width:40%; border: none; text-align: right;">
+                    <vaadin-button theme="small" id="addToWatch" style="margin-left: 10px;" @click=${this.handleAddFollow}>Add</vaadin-button>
+                </td>
+                <td style="width: 5%; border: none;"></td>
+            </tr>
+        `;
+    }
+
     private renderFairValuation(item: Object) {
         return html` <add-fair-price-modal .stock=${item}></add-fair-price-modal> `;
     }
@@ -214,13 +245,41 @@ class HomeAlerts extends LitElement {
         this.items = items;
         console.debug(data, loading, error, errors, networkStatus, items);
 
+        const group = [
+            { id: 1, label: "Lemon" },
+            { id: 2, label: "Repeated" },
+        ];
+
         if (error) {
             return dialogGraphError(formatError(options, error));
         }
 
+        let t;
         if (loading) {
+            t = setTimeout(() => {
+                this.showLoading = true;
+            }, 3000);
+        }
+
+        if (!loading) {
+            console.log("danvir, clear");
+            clearTimeout(t);
+        }
+
+        if (this.showLoading && loading) {
+            console.log("danvir, renderLoading");
             return renderLoading();
         }
+
+        console.log("danvir, after");
+
+        // if (loading) {
+        //     //const loader = document.querySelector('.loader');
+        //     var t = setTimeout("showSpinner()", 50);
+        //     return renderLoading();
+        // }
+
+        //clearTimeout(t);
 
         return html`
             <!-- slot, just in case although not sure it make sense with this specific component -->
@@ -228,7 +287,19 @@ class HomeAlerts extends LitElement {
 
             ${this.items?.length == 0
                 ? html`
-                      <select-input></select-input>
+                      <!-- <generic-help>Repeating Alert: Sends one alert and then resets the alert</generic-help> -->
+                      <!-- <toggle-group .items=${group}></toggle-group> -->
+                      <!-- <toggle-button>One-Off Alert</toggle-button>
+                      <toggle-button>Repeated Alert</toggle-button> -->
+                      <!-- <select-input></select-input> -->
+
+                      <help-tooltip>
+                          <p>One-off: Sends one alert, and will eventually be removed by the system if not renabled.</p>
+                          <p>Repeating Alert: Sends one alert and then resets the alert thus the alert is repeating.</p>
+                      </help-tooltip>
+                      <br />
+
+                      <toggle-group label="Notification" .items=${group} selectMany></toggle-group>
                       <message-box loaded boxImg="/images/no_items_alerts.svg" boxTitle="No alerts configured" boxSubtitle="Add an alert to be notified on various indicators" help="">
                           <vaadin-horizontal-layout style="align-items: center; text-align: center;" theme="spacing">
                               <vaadin-button @click="${this.handleAddFollow}" theme="primary">Add an Alert</vaadin-button>
@@ -237,7 +308,7 @@ class HomeAlerts extends LitElement {
                   `
                 : html`
                       <!-- Main table data -->
-                      <table>
+                      <table class="yld0">
                           <thead>
                               <tr style="border-color: var(--lumo-contrast-10pct);border-bottom-style: solid;border-bottom-width: 1px;">
                                   <th style="vertical-align: bottom;">
@@ -260,13 +331,22 @@ class HomeAlerts extends LitElement {
                           ${this.items?.map((item, index) => {
                               return html`${this.renderRow(item, index)}`;
                           })}
+                          ${this.renderLastRow()}
                       </table>
                   `}
             <!-- slot, just in case -->
             <slot></slot>
 
             <!-- add alert modal -->
-            <addalert-modal .stock=${this.items[0]} title="Add an Alert" ?open="${this.modalOpen}" @closed="${(e: CustomEvent) => (this.modalOpen = e.detail.value)}"></addalert-modal>
+            <addalert-modal
+                .stock=${this.items[0]}
+                title="Add an Alert"
+                ?open="${this.modalOpen}"
+                @closed="${(e: CustomEvent) => {
+                    this.modalOpen = e.detail.value;
+                    this.query.refetch();
+                }}"
+            ></addalert-modal>
         `;
     }
 }

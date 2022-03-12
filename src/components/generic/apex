@@ -1,0 +1,116 @@
+        // var options = {
+        //     series: [
+        //         {
+        //             name: this.stock.symbol,
+        //             data: historical_prices_1yr,
+        //         },
+        //     ],
+        //     chart: {
+        //         type: "area",
+        //         stacked: false,
+        //         height: 250,
+        //         animations: {
+        //             enabled: false,
+        //         },
+        //         zoom: {
+        //             type: "x",
+        //             enabled: true,
+        //             autoScaleYaxis: true,
+        //         },
+        //         toolbar: {
+        //             autoSelected: "zoom",
+        //         },
+        //     },
+        //     dataLabels: {
+        //         enabled: false,
+        //     },
+        //     markers: {
+        //         size: 0,
+        //     },
+        //     title: {
+        //         text: "",
+        //         align: "left",
+        //     },
+        //     grid: {
+        //         show: true,
+        //         borderColor: "#90A4AE",
+        //         strokeDashArray: 0,
+        //         position: "back",
+        //         xaxis: {
+        //             lines: {
+        //                 show: false,
+        //             },
+        //         },
+        //         yaxis: {
+        //             lines: {
+        //                 show: false,
+        //             },
+        //         },
+        //         row: {
+        //             colors: undefined,
+        //             opacity: 0.5,
+        //         },
+        //         column: {
+        //             colors: undefined,
+        //             opacity: 0.5,
+        //         },
+        //         padding: {
+        //             top: 0,
+        //             right: 0,
+        //             bottom: 0,
+        //             left: 50,
+        //         },
+        //     },
+        //     annotations: {
+        //         yaxis: annotations_yaxis,
+        //         xaxis: [
+        //             {
+        //                 x: new Date(this.alert?.created_at).getTime(),
+        //                 strokeDashArray: 0,
+        //                 borderColor: "#775DD0",
+        //                 label: {
+        //                     borderColor: "#775DD0",
+        //                     style: {
+        //                         color: "#fff",
+        //                         background: "#775DD0",
+        //                     },
+        //                     text: "alert created at",
+        //                 },
+        //             },
+        //         ],
+        //     },
+        //     fill: {
+        //         type: "gradient",
+        //         gradient: {
+        //             shadeIntensity: 1,
+        //             inverseColors: false,
+        //             opacityFrom: 0.5,
+        //             opacityTo: 0,
+        //             stops: [0, 90, 100],
+        //         },
+        //     },
+        //     yaxis: {
+        //         labels: {
+        //             formatter: function (val) {
+        //                 return val % 1 !== 0 ? val.toFixed(2) : val;
+        //             },
+        //         },
+        //         title: {
+        //             text: "Price",
+        //         },
+        //     },
+        //     xaxis: {
+        //         type: "datetime",
+        //     },
+        //     tooltip: {
+        //         shared: false,
+        //         y: {
+        //             formatter: function (val) {
+        //                 return val % 1 !== 0 ? val.toFixed(2) : val;
+        //             },
+        //         },
+        //     },
+        // };
+
+        // this.lineChart = new ApexCharts(this.chart, options);
+        // this.lineChart.render();

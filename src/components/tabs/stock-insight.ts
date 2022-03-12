@@ -301,7 +301,7 @@ class YLD0StockInsight extends LitElement {
         return html`
             <!-- The main content is added / removed dynamically by the router -->
             <section>
-                <table>
+                <table class="yld0">
                     <!-- header -->
                     ${this.tableHeaderRenderer()}
                     <!-- data -->

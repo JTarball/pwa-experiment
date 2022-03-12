@@ -18,7 +18,7 @@ class Notification extends LitElement {
     @property({ type: Boolean, reflect: true })
     opened: boolean = false;
 
-    @property()
+    @property({ type: String })
     text: String;
 
     // -- End of properties, queries etc. -- //

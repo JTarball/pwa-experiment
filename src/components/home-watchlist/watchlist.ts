@@ -321,7 +321,7 @@ class HomeWatchList extends LitElement {
                   `
                 : html`
                       <!-- Main table data -->
-                      <table>
+                      <table class="yld0">
                           <thead>
                               <tr style="border-color: var(--lumo-contrast-10pct);border-bottom-style: solid;border-bottom-width: 1px;">
                                   <th style="vertical-align: bottom;">

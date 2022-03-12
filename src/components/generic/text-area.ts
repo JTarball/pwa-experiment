@@ -60,6 +60,12 @@ class TextAreaElement extends LitElement {
     @property({ type: String })
     metaClass: string = "";
 
+    @property({ type: String })
+    theme: string = "";
+
+    @query("textarea")
+    _textarea;
+
     // -- End of properties, queries etc. -- //
 
     static styles = [
@@ -69,8 +75,12 @@ class TextAreaElement extends LitElement {
         themeStyles,
         css`
             .textArea {
-                margin-top: 30px;
+                margin-top: 3rem;
                 width: 100%;
+            }
+
+            .no-margin {
+                margin-top: 0rem;
             }
 
             .text {
@@ -126,6 +136,44 @@ class TextAreaElement extends LitElement {
                 box-sizing: border-box;
                 top: -5px;
             }
+
+            ::placeholder {
+                color: var(--lumo-contrast-50pct);
+            }
+
+            ::-ms-input-placeholder {
+                color: var(--lumo-contrast-50pct);
+            }
+
+            /* Theming */
+
+            .no-border {
+                border: none;
+                font-size: var(--lumo-font-size-m);
+            }
+
+            textarea.no-focus-border:focus {
+                outline: none;
+            }
+
+            textarea.narrow {
+                height: 40px;
+                min-height: 40px;
+                padding-top: 0;
+                padding-bottom: 0;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+            textarea.long {
+                height: 200px;
+            }
+
+            textarea.longer {
+                height: 250px;
+            }
+
+            /* End of Theming */
         `,
     ];
 
@@ -135,14 +183,31 @@ class TextAreaElement extends LitElement {
         this.dispatchEvent(event);
     }
 
+    clear() {
+        this._textarea.value = "";
+    }
+
     // -- Main Render -- //
     render() {
-        const classes = { text: true, disabled: this.disabled, error: this.error };
+        const classes = {
+            text: true,
+            disabled: this.disabled,
+            error: this.error,
+            "no-border": this.theme.includes("no-border"),
+            "no-focus-border": this.theme.includes("no-focus-border"),
+            long: this.theme.includes("long"),
+            narrow: this.theme.includes("narrow"),
+        };
+
+        const textAreaclasses = {
+            textArea: true,
+            "no-margin": this.theme.includes("no-margin"),
+        };
 
         return html`
-            <div class="textArea">
+            <div class="${classMap(textAreaclasses)}">
                 <label class="text-area-label" for="target">${this.label}</label>
-                <textarea name="target" class="${classMap(classes)}" rows="4" cols="50"></textarea>
+                <textarea placeholder="${this.placeholder}" name="target" @keyup=${this.handleOnChange} class="${classMap(classes)}" rows="4" cols="50" .value=${this.value}> </textarea>
             </div>
         `;
     }

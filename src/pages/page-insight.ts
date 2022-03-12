@@ -133,7 +133,7 @@ export class PageInsight extends PageElement {
                 </vaadin-tabs>
 
                 <section id="content" @panleft=${(e) => this._slideLeftHandler(e)}>
-                    <table style="width:100%;">
+                    <table class="yld0" style="width:100%;">
                         <tr style="width:100%;">
                             <td style="width:100%;">
                                 <article id="trends"><insight-trends></insight-trends></article>

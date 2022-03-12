@@ -1,6 +1,6 @@
 /* Full Page Modal */
 import { LitElement, html, css } from "lit";
-import { customElement, state, property } from "lit/decorators.js";
+import { customElement, state, property, query } from "lit/decorators.js";
 
 import "@vaadin/avatar";
 import "@vaadin/horizontal-layout";
@@ -21,6 +21,7 @@ import { badge } from "@vaadin/vaadin-lumo-styles/badge.js";
 
 import { themeStyles } from "../themes/yld0-theme/styles.js";
 import { HammerController } from "../controllers/hammer-controller";
+import { formatRFC3339WithOptions } from "date-fns/fp";
 
 /**
  * `<yld0-tabs>` is a Web Component for easy switching between different views.
@@ -64,7 +65,7 @@ class YLD0Tabs extends LitElement {
     // Reactive controller for hammer gestures
     private _ = new HammerController(this, { panleft: {}, panright: {} }, { panleft: { selectors: ["#progress"] }, panright: { selectors: [".lemon"] }, tap: { selectors: [".lemon"] }, options: {} });
 
-    @state()
+    @property({ type: Number, reflect: true })
     index: number = 0;
 
     @property({ type: String, reflect: true })
@@ -72,6 +73,9 @@ class YLD0Tabs extends LitElement {
 
     @property({ type: Number, reflect: true })
     selected: Number = 0;
+
+    @query("#lemon")
+    lemon;
 
     /* End of properties, states ... */
 
@@ -205,36 +209,57 @@ class YLD0Tabs extends LitElement {
             this._slideLeftHandler(e);
         });
 
-        this.addEventListener("panright", (e: Event) => {
+        this.srh = (e: Event) => {
             this._slideRightHandler(e);
-        });
+        };
+
+        this.addEventListener("panright", this.srh);
 
         // set orientation for tab items
         this.setAttribute("orientation", this.orientation);
         this.setAttribute("aria-orientation", this.orientation);
+
+        // Set index on children, which can be used as a reference for progammatically switching tabs
+        Array.from(this.children).forEach((el: Element, i) => {
+            el.setAttribute("index", i);
+        });
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        this.removeEventListener("panright", this.srh);
     }
 
     protected firstUpdated() {
         // Set initial state where possible ...
 
+        console.log("nuno firstUpdated, ", this.id, this.index);
+
         Array.from(this.children).forEach((el: Element, i) => {
             const x = (i - this.index) * this.clientWidth;
-            console.log("constructor ", "i", i, x);
+            console.log("nuno constructor ", "i", i, x);
             if (i > 0) {
                 (el as HTMLElement).style.visibility = "hidden";
                 (el as HTMLElement).style.display = "none";
             }
 
             (el as HTMLElement).style.transform = `translate3d(${x}px,0,0)`;
+
+            // Set index on children, which can be used as a reference for progammatically switching tabs
+            //el.setAttribute("index", i);
         });
 
-        const item = this.shadowRoot?.querySelectorAll("yld0-tabitem")[0];
-        let idx;
-        if (item && !item.disabled && (idx = Array.from(this.shadowRoot?.querySelectorAll("yld0-tabitem")).indexOf(item)) >= 0) {
-            this.index = idx;
-            item.setAttribute("selected", "");
-            this.syncSlide(0);
-        }
+        console.log("nuno yld0-tabs firstupdated");
+        this.syncSelected();
+
+        // const item = this.shadowRoot?.querySelectorAll("yld0-tabitem")[this.index];
+        // let idx;
+        // if (item && !item.disabled && (idx = Array.from(this.shadowRoot?.querySelectorAll("yld0-tabitem")).indexOf(item)) >= 0) {
+        //     this.index = idx;
+        //     item.setAttribute("selected", "");
+        //     //this.lemon.scrollLeft = 1400;
+        //     this.syncSlide(0);
+        // }
     }
 
     /* Advance to the next tab if possible */
@@ -390,13 +415,22 @@ class YLD0Tabs extends LitElement {
 
     private syncSelected() {
         this.selected = this.index;
+
+        let sl = 0;
         Array.from(this.shadowRoot?.querySelectorAll("yld0-tabitem")).forEach((el: Element, i) => {
             if (i == this.index) {
+                console.log("nuno yld0-tabs", i, sl);
                 el.setAttribute("selected", "");
+                this.lemon.scrollLeft = sl;
             } else {
                 el.removeAttribute("selected");
             }
+            // Calculate the scroll width
+            sl += el.clientWidth;
+            console.log("nuno", i, el.clientWidth, el.offsetWidth, el.width, el.scrollWidth);
         });
+
+        this.syncSlide(0);
     }
 
     private _filterItems(array) {
@@ -421,6 +455,7 @@ class YLD0Tabs extends LitElement {
 
     update(changedProperties: PropertyValues) {
         // We use a reflected property 'selected' which is the same as the index
+        console.log("yld0-tabs update");
 
         var syncNeeded = false;
         if (this.selected != this.index) {
@@ -431,16 +466,12 @@ class YLD0Tabs extends LitElement {
         this.syncSelected();
 
         // if (syncNeeded) {
-        //     this.syncSelected()
         //     this.syncSlide(0);
         // }
 
-        // const item = this.shadowRoot?.querySelectorAll("yld0-tabitem")[this.selected];
-        // let idx;
-        // if (item && !item.disabled && (idx = Array.from(this.shadowRoot?.querySelectorAll("yld0-tabitem")).indexOf(item)) >= 0) {
-        //     this.index = idx;
-        //     item.setAttribute("selected", "");
-        //     // this.syncSlide(0);
+        // console.log("danvir update -- check - remove", this.lemon);
+        // if (this.lemon) {
+        //     this.lemon.scrollLeft = this.index * 128;
         // }
 
         super.update(changedProperties);
@@ -448,11 +479,7 @@ class YLD0Tabs extends LitElement {
 
     render() {
         return html`
-            <div part="tabs">
-                ${Array.from(this.children).map((child, i) => html` <yld0-tabitem>${child.getAttribute("title")}</yld0-tabitem>`)}
-
-                <!-- <span id="slider"></span> -->
-            </div>
+            <div id="lemon" part="tabs" class="yld0Tabs">${Array.from(this.children).map((child, i) => html` <yld0-tabitem>${child.getAttribute("title")}</yld0-tabitem>`)}</div>
 
             <slot></slot>
 

@@ -33,6 +33,9 @@ import { themeStyles } from "../../themes/yld0-theme/styles.js";
 class NumberInputElement extends LitElement {
     // -- Start of state, properties, queries -- //
 
+    @property()
+    items: [Object];
+
     @property({ type: Boolean, reflect: true })
     disabled: boolean = false;
 
@@ -213,6 +216,99 @@ class NumberInputElement extends LitElement {
                 box-sizing: border-box;
                 top: -60px;
             }
+
+            //
+            //
+            //
+            //
+            //
+
+            .md-select {
+                *,
+                :after,
+                :before {
+                    box-sizing: border-box;
+                }
+                /*Demo css do not add to your project*/
+
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                /*--*/
+
+                display: block;
+                margin: 10px 0 8px 0;
+                padding-bottom: 2px;
+                /*  position: relative;*/
+                min-width: 180px;
+
+                &.active ul {
+                    max-height: 200px;
+                    overflow: auto;
+                    padding: 8px 0 16px 0px;
+                    z-index: 2;
+                    transition: all 0.2s ease;
+                }
+            }
+
+            button[type="button"] {
+                background: #fff;
+                border-color: rgba(0, 0, 0, 0.12);
+                border-width: 0 0 1px 0;
+                color: rgba(0, 0, 0, 0.73);
+                cursor: default;
+                display: block;
+                line-height: 48px;
+                padding: 2px 0 1px 16px;
+                position: relative;
+                text-align: left;
+                text-shadow: none;
+                width: 100%;
+                z-index: 1;
+                outline: none;
+                overflow: hidden;
+            }
+
+            [type="button"]:focus,
+            [type="button"]:hover {
+                background: rgba(0, 0, 0, 0.1);
+            }
+            [type="button"]:after {
+                content: "\25be";
+                float: right;
+                padding-right: 16px;
+            }
+
+            ul[role="listbox"] {
+                background-color: white;
+                cursor: default;
+                list-style: none;
+                line-height: 26px;
+                overflow: hidden;
+                margin: 0;
+                max-height: 0;
+                position: absolute;
+                padding: 0;
+                transform: translateY(-50%);
+                transition: all 0.15s cubic-bezier(0.35, 0, 0.25, 1);
+                width: 100%;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+            }
+
+            ul[role="listbox"] li {
+                height: 48px;
+                margin: 0;
+                padding: 10px 16px;
+                outline: none;
+                overflow: hidden;
+
+                &:focus,
+                &:hover,
+                &.active {
+                    background: rgba(0, 0, 0, 0.1);
+                }
+            }
         `,
     ];
 
@@ -243,10 +339,74 @@ class NumberInputElement extends LitElement {
                                 ?error=${this.error}
                                 @keyup=${this.handleOnChange}
                             /> -->
-                            <select name="target"></select>
+                            <div class="md-select">
+                                <label for="ul-id"><button type="button" class="ng-binding">State 2</button></label>
+                                <ul role="listbox" id="ul-id" class="md-whiteframe-z1" aria-activedescendant="state2_AK" name="ul-id">
+                                    <li role="option" id="state2_AK" class="ng-binding ng-scope active" tabindex="-1" aria-selected="true">Alaska</li>
+                                    <li role="option" id="state2_AL" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Alabama</li>
+                                    <li role="option" id="state2_AR" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Arkansas</li>
+                                    <li role="option" id="state2_AS" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">American Samoa</li>
+                                    <li role="option" id="state2_AZ" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Arizona</li>
+                                    <li role="option" id="state2_CA" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">California</li>
+                                    <li role="option" id="state2_CO" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Colorado</li>
+                                    <li role="option" id="state2_CT" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Connecticut</li>
+                                    <li role="option" id="state2_DC" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">District Of Columbia</li>
+                                    <li role="option" id="state2_DE" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Delaware</li>
+                                    <li role="option" id="state2_FL" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Florida</li>
+                                    <li role="option" id="state2_FM" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Federated States Of Micronesia</li>
+                                    <li role="option" id="state2_GA" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Georgia</li>
+                                    <li role="option" id="state2_GU" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Guam</li>
+                                    <li role="option" id="state2_HI" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Hawaii</li>
+                                    <li role="option" id="state2_IA" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Iowa</li>
+                                    <li role="option" id="state2_ID" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Idaho</li>
+                                    <li role="option" id="state2_IL" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Illinois</li>
+                                    <li role="option" id="state2_IN" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Indiana</li>
+                                    <li role="option" id="state2_KS" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Kansas</li>
+                                    <li role="option" id="state2_KY" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Kentucky</li>
+                                    <li role="option" id="state2_LA" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Louisiana</li>
+                                    <li role="option" id="state2_MA" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Massachusetts</li>
+                                    <li role="option" id="state2_MD" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Maryland</li>
+                                    <li role="option" id="state2_ME" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Maine</li>
+                                    <li role="option" id="state2_MH" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Marshall Islands</li>
+                                    <li role="option" id="state2_MI" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Michigan</li>
+                                    <li role="option" id="state2_MN" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Minnesota</li>
+                                    <li role="option" id="state2_MO" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Missouri</li>
+                                    <li role="option" id="state2_MP" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Northern Mariana Islands</li>
+                                    <li role="option" id="state2_MS" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Mississippi</li>
+                                    <li role="option" id="state2_MT" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Montana</li>
+                                    <li role="option" id="state2_NC" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">North Carolina</li>
+                                    <li role="option" id="state2_ND" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">North Dakota</li>
+                                    <li role="option" id="state2_NE" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Nebraska</li>
+                                    <li role="option" id="state2_NH" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">New Hampshire</li>
+                                    <li role="option" id="state2_NJ" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">New Jersey</li>
+                                    <li role="option" id="state2_NM" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">New Mexico</li>
+                                    <li role="option" id="state2_NV" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Nevada</li>
+                                    <li role="option" id="state2_NY" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">New York</li>
+                                    <li role="option" id="state2_OH" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Ohio</li>
+                                    <li role="option" id="state2_OK" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Oklahoma</li>
+                                    <li role="option" id="state2_OR" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Oregon</li>
+                                    <li role="option" id="state2_PA" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Pennsylvania</li>
+                                    <li role="option" id="state2_PR" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Puerto Rico</li>
+                                    <li role="option" id="state2_PW" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Palau</li>
+                                    <li role="option" id="state2_RI" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Rhode Island</li>
+                                    <li role="option" id="state2_SC" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">South Carolina</li>
+                                    <li role="option" id="state2_SD" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">South Dakota</li>
+                                    <li role="option" id="state2_TN" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Tennessee</li>
+                                    <li role="option" id="state2_TX" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Texas</li>
+                                    <li role="option" id="state2_UT" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Utah</li>
+                                    <li role="option" id="state2_VA" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Virginia</li>
+                                    <li role="option" id="state2_VI" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Virgin Islands</li>
+                                    <li role="option" id="state2_VT" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Vermont</li>
+                                    <li role="option" id="state2_WA" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Washington</li>
+                                    <li role="option" id="state2_WI" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Wisconsin</li>
+                                    <li role="option" id="state2_WV" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">West Virginia</li>
+                                    <li role="option" id="state2_WY" class="ng-binding ng-scope" tabindex="-1" aria-selected="false">Wyoming</li>
+                                </ul>
+                            </div>
 
+                            <!-- 
                             <span class="prefix">${this.prefix}</span>
-                            <span class="suffix">${this.suffix}</span>
+                            <span class="suffix">${this.suffix}</span> -->
                         </div>
                         <label class="input-label" for="target">${this.label}</label>
                     </div>

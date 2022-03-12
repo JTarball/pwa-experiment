@@ -39,11 +39,23 @@ export const themeStyles = css`
             table {
                 display: block;
                 border-collapse: collapse;
+                /* Do not change as it will conflict with Lightweight charts */
+                /* width: 100%;
+                margin-top: 20px;
+                margin-bottom: 60px;
+                padding-bottom: 100px; */
+            }
+
+
+            table.yld0 {
+                display: block;
+                border-collapse: collapse;
                 width: 100%;
                 margin-top: 20px;
                 margin-bottom: 60px;
-                padding-bottom: 100px;
+                padding-bottom: 100px; 
             }
+
 
             table tr,
             table td {
@@ -148,11 +160,20 @@ export const themeStyles = css`
                 color: var(--lumo-error-color);
             }
 
-            table td span.stockSymbol, table td span.title {
+            table td span.stockSymbol, table td span.title, span.title {
                 padding-right: 8px;
                 color: var(--lumo-primary-text-color);
                 font-weight: 500;
             }
+
+            table td span.stockSymbolBig, span.stockSymbolBig {
+                font-size: var(--lumo-font-size-xxl);
+                font-weight: 500;
+                color: var(--lumo-contrast);
+                padding: 0;
+                text-align: left;
+            }
+
 
             table td span.title {
                 font-size: var(--lumo-font-size-tiny);
@@ -165,9 +186,15 @@ export const themeStyles = css`
                 text-align: left;
             }
 
-           table td span.description{
+           table td span.description, span.description {
                 font-size: var(--lumo-font-size-micro);
                 color: var(--lumo-secondary-text-color);
+            }
+
+            span.priceBold {
+                font-size: var(--lumo-font-size-micro);
+                font-weight: 500;
+                color: var(--lumo-contrast);
             }
 
             table td span.price {
@@ -217,10 +244,7 @@ export const themeStyles = css`
                 }
             }
 
-            span.description{
-                font-size: var(--lumo-font-size-micro);
-                color: var(--lumo-secondary-text-color);
-            }
+
 
             p.description{
                 font-size: var(--lumo-font-size-micro);
@@ -236,6 +260,7 @@ export const themeStyles = css`
                 align-items:center;
                 height:100%;
                 min-height: 500px;
+                z-index: 0;
             }
 
             .dot {

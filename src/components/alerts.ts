@@ -149,18 +149,19 @@ class YLD0AlertsHome extends LitElement {
             <section>
                 ${this.items_stocks?.length == 0
                     ? html`
+                          <toggle-button></toggle-button>
                           <vaadin-vertical-layout style="line-height: var(--lumo-line-height-m);">
                               <vaadin-button class="buttonAdd" @click=${this.handleAddAlert}>Add</vaadin-button>
                           </vaadin-vertical-layout>
 
-                          <table id="wrapper">
+                          <table class="yld0" id="wrapper">
                               <td><img id="bgImg" src="images/bg-alerts.png" alt="" /></td>
                               <span class="bgHeader">No alerts added yet. </span>
                               <span class="bgDescription">Click <em>Add</em> to add a stock to start adding alerts.</span>
                           </table>
                       `
                     : html`
-                          <table>
+                          <table class="yld0">
                               <thead>
                                   <tr>
                                       <th style="vertical-align: bottom;">

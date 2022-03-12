@@ -68,6 +68,9 @@ class NumberInputElement extends LitElement {
         spacing,
         themeStyles,
         css`
+            .wrapper {
+            }
+
             .numberInput {
                 border-bottom-color: rgb(0, 0, 0);
                 border-bottom-style: none;
@@ -228,30 +231,32 @@ class NumberInputElement extends LitElement {
         const classes = { input: true, disabled: this.disabled, error: this.error };
 
         return html`
-            <vaadin-horizontal-layout style="width:100%;">
-                <span>
-                    <div class="numberInput">
-                        <div>
-                            <input
-                                name="target"
-                                type="number"
-                                placeholder=${this.placeholder}
-                                class="${classMap(classes)}"
-                                value="${this.value}"
-                                style="padding-left: 49px; padding-right: 32px;"
-                                ?disabled=${this.disabled}
-                                ?error=${this.error}
-                                @keyup=${this.handleOnChange}
-                            />
+            <div class="wrapper">
+                <vaadin-horizontal-layout style="width:100%;">
+                    <span>
+                        <div class="numberInput">
+                            <div>
+                                <input
+                                    name="target"
+                                    type="number"
+                                    placeholder=${this.placeholder}
+                                    class="${classMap(classes)}"
+                                    value="${this.value}"
+                                    style="padding-left: 49px; padding-right: 32px;"
+                                    ?disabled=${this.disabled}
+                                    ?error=${this.error}
+                                    @keyup=${this.handleOnChange}
+                                />
 
-                            <span class="prefix">${this.prefix}</span>
-                            <span class="suffix">${this.suffix}</span>
+                                <span class="prefix">${this.prefix}</span>
+                                <span class="suffix">${this.suffix}</span>
+                            </div>
+                            <label class="input-label" for="target">${this.label}</label>
                         </div>
-                        <label class="input-label" for="target">${this.label}</label>
-                    </div>
-                </span>
-                ${this.meta ? html`<div class="meta ${this.metaClass}">${this.meta}</div>` : html``}
-            </vaadin-horizontal-layout>
+                    </span>
+                    ${this.meta ? html`<div class="meta ${this.metaClass}">${this.meta}</div>` : html``}
+                </vaadin-horizontal-layout>
+            </div>
         `;
     }
 }

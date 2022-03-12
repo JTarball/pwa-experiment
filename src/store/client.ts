@@ -4,7 +4,9 @@ import { setContext } from "@apollo/client/link/context";
 
 import { myState } from "../store/state.js";
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+    addTypename: false,
+});
 
 const authLink = setContext((_, { headers }) => {
     // get the authentication token from local storage if it exists

@@ -177,6 +177,20 @@ export const views: ViewRoute[] = [
             await import("../pages/page-test.js");
         },
     },
+
+    {
+        path: "/stocks/:symbol",
+        name: "stocks-detail",
+        title: "Stock Quote",
+        animate: {
+            enter: "child-entering" /* Not technically used - but we dont want default  */,
+            leave: "child-leaving",
+        },
+        component: "page-ticker-detail",
+        action: async () => {
+            await import("../pages/page-ticker-detail.js");
+        },
+    },
     {
         path: "/stocks",
         name: "stocks",
@@ -184,9 +198,10 @@ export const views: ViewRoute[] = [
         animate: false,
         component: "page-stock-detail",
         action: async () => {
-            await import("../pages/page-stock-detail.js");
+            await import("../pages/page-ticker-detail.js");
         },
     },
+
     {
         path: "/alerts",
         name: "alerts",

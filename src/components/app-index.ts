@@ -256,6 +256,8 @@ export class AppIndex extends LitElement {
 
     render() {
         return html`
+            <div id="app"></div>
+
             <vaadin-app-layout primary-section="navbar|drawer">
                 <!-- The main content is added / removed dynamically by the router -->
                 <apollo-client>

@@ -2,8 +2,8 @@
 
 import { gql } from "@apollo/client/core";
 
-export const GetFollows = gql`
-    query GetFollows {
+export const GetAlertFollows = gql`
+    query GetAlertFollows {
         follows(only_with_alerts: true) {
             items {
                 symbol
@@ -11,12 +11,18 @@ export const GetFollows = gql`
                 logo_url
                 alerts {
                     uuid
+                    alert_type
                     title
-                    help
+                    description
                     info
+                    created_at
                     notification_types
                     enabled
                     triggered
+                    graph_annotations {
+                        name
+                        value
+                    }
                 }
             }
             total_results

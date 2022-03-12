@@ -258,14 +258,14 @@ class YLD0HomeWatchList extends LitElement {
                               <vaadin-button class="buttonAdd">Add</vaadin-button>
                           </vaadin-vertical-layout>
 
-                          <!-- <table id="wrapper">
+                          <!-- <table class="yld0" id="wrapper">
                               <td><img id="bgImg" src="images/bg-watchlist.png" alt="" /></td>
                               <span class="bgHeader">No alerts added yet. </span>
                               <span class="bgDescription">Click <em>Add</em> to add a stock to start adding alerts.</span>
                           </table> -->
                       `
                     : html`
-                          <table>
+                          <table class="yld0">
                               <thead>
                                   <tr>
                                       <th style="vertical-align: bottom;">

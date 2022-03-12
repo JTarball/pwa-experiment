@@ -1,6 +1,6 @@
 /* Full Page Modal */
 import { LitElement, html, css } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 
 import { utility } from "@vaadin/vaadin-lumo-styles/utility";
 import { spacing } from "@vaadin/vaadin-lumo-styles/utilities/spacing.js";
@@ -12,6 +12,9 @@ import "./yld0-tabitem.js";
 @customElement("yld0-tab")
 class YLD0Tab extends LitElement {
     /* Properties, states, mixins etc. */
+
+    @property({ type: Number, reflect: true })
+    index: number; // Holds the index (used for identification by yld0-tabs)
 
     /* End of properties, states ... */
 

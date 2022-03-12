@@ -10,9 +10,6 @@ import type { Params } from "@vaadin/router";
 
 import { routes } from "./routes.js";
 
-
-
-
 export const router = new Router();
 
 router.setRoutes([
@@ -43,10 +40,11 @@ export const getLocation = () => {
     return router.location;
 };
 
-export const goPath = (url: string, searchParamsUrl: string) => {
+export const goPath = (url: string, searchParamsUrl: string, hash = undefined) => {
     Router.go({
         pathname: url,
         search: searchParamsUrl,
+        hash: hash,
     });
 };
 
@@ -59,6 +57,8 @@ export const getBackUrl = () => {
     return backurl;
 };
 
-
-
-
+export const getSymbolFromPath = () => {
+    const symbol = router.location?.params["symbol"] || "";
+    console.log("symbol,", symbol, router.location?.search, router);
+    return symbol;
+};

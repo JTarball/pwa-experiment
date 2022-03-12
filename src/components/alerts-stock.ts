@@ -30,7 +30,7 @@ import "@polymer/paper-toggle-button/paper-toggle-button.js";
 import { themeStyles } from "../themes/yld0-theme/styles.js";
 import { UserStock, UserStockAlert } from "../store/models.js";
 
-import "./add-alert-modal";
+import "./home-alerts/add-alert/add-alert-modal";
 import "./home-alerts/add-alert/select-stock";
 
 @customElement("alerts-stock")
@@ -231,7 +231,7 @@ class YLD0AlertsStock extends LitElement {
         return html`
             <!-- The main content is added / removed dynamically by the router -->
             <section>
-                <table>
+                <table class="yld0">
                     <thead>
                         <tr>
                             <th style="vertical-align: bottom;">

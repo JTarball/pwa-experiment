@@ -1,0 +1,206 @@
+[
+    {
+        "name": "Summary",
+        "hash": "#summary",
+        "tags": ["summmary", "fair price", "moat", "investment type", "innovation"],
+        "description": "Summary of stock recommendation including fair prices, ratings, rate of innovation and economic moat."
+    },
+    {
+        "name": "Our Rating",
+        "hash": "#yld0-rating",
+        "tags": ["rating", "yld0 rating"],
+        "description": "Our rating and detail information as to why"
+    },
+    {
+        "name": "Insight",
+        "hash": "#yld0-insights",
+        "tags": ["insight", "flags"],
+        "description": "Insight into the stock, including any Red flags"
+    },
+    {
+        "name": "Risk Check",
+        "hash": "#yld0-risk-check",
+        "tags": ["risk", "checks"],
+        "description": "General high level risk checks"
+    },
+    {
+        "name": "Wall Street Ratings",
+        "hash": "#wall-street-ratings",
+        "tags": ["wall street", "ratings"],
+        "description": "Wall street's analyst ratings"
+    },
+    {
+      "name": "Analyst Predictions",
+      "hash": "#analysts-price-targets",
+      "tags": ["Analyst"],
+      "description": "Analyst's One year price targets"
+    },
+    {
+        "name": "Analyst Recommendations",
+        "hash": "#analysts-recommendations",
+        "tags": ["Analyst", "Recommendations"],
+        "description": "Recommendations from wall streets analysts"
+    },
+    {
+        "name": "Analyst Financial Estimates",
+        "hash": "#analysts-financial-estimates",
+        "tags": ["Analyst", "Recommendations"],
+        "description": "Financial estimates for the year from Wall St. analysts"
+    },
+    {
+        "name": "Analyst Analysis of COT Reports",
+        "hash": "#analysts-analysis-of-cot-reports",
+        "tags": ["Analyst", "cot"],
+        "description": "Analysts analysis of COT reports"
+    },
+    {
+        "name": "Fundamentals",
+        "hash": "#fundamentals",
+        "tags": ["fundamentals"],
+        "description": "Stock's fundamental metrics"
+    },
+    {
+        "name": "Valuation",
+        "hash": "#fundamentals-valuation",
+        "tags": ["fundamentals", "valuation"],
+        "description": "Underlying fundamental metrics for valution grade"
+    },
+    {
+        "name": "Fundamental Growth Metrics",
+        "hash": "#fundamentals-growth",
+        "tags": ["fundamentals", "growth"],
+        "description": "Underlying fundamental metrics for growth"
+    },
+    {
+        "name": "Profitability",
+        "hash": "#fundamentals-profitability",
+        "tags": ["fundamentals", "profitability", "profit"],
+        "description": "Underlying fundamental metrics for measuring probability"
+    },
+    {
+        "name": "Financials",
+        "hash": "#financials",
+        "tags": ["financials"],
+        "description": "Main financials including cash-flow, balance and income sheet"
+    },
+    {
+        "name": "Cashflow",
+        "hash": "#cashflow",
+        "tags": ["cashflow", "free cash flow", "cash"],
+        "description": "Financials for cash flow"
+    },
+    {
+        "name": "Balance Sheet",
+        "hash": "#balance-sheet",
+        "tags": ["balance", "balance sheet"],
+        "description": "Financials for the balance sheet"
+    },
+    {
+        "name": "Income Sheet",
+        "hash": "#income-sheet",
+        "tags": ["Income", "income sheet"],
+        "description": "Financials for the income sheet"
+    },
+    {
+        "name": "Research",
+        "hash": "#research",
+        "tags": ["in-depth", "in depth"],
+        "description": "Research in-depth topics"
+    },
+    {
+        "name": "News",
+        "hash": "#news",
+        "tags": ["news"],
+        "description": "Research in-depth topics"
+    },
+    {
+        "name": "Investor Relations",
+        "hash": "#investor-relations",
+        "tags": ["investor"],
+        "description": "Investor relations"
+    },
+    {
+        "name": "Press Releases",
+        "hash": "#press-releases",
+        "tags": ["releases", "press", "media", "press releases"],
+        "description": "Official statements written by the company"
+    },
+    {
+        "name": "SEC Filings",
+        "hash": "#sec-filings",
+        "tags": ["sec", "filings"],
+        "description": "Regulatory documents that companies submit to the securities and exchange commission (SEC)"
+    },
+    {
+        "name": "Recent institutional ",
+        "hash": "#recent-institutional-transactions",
+        "tags": ["transactions"],
+        "description": "Recent transactions by institutions"
+    },
+    {
+        "name": "Shareholders",
+        "hash": "#ownership",
+        "tags": ["ownership", "shareholders"],
+        "description": "Who are the shareholders"
+    },
+    {
+        "name": "Earning Calls",
+        "hash": "#earning-calls",
+        "tags": ["earnings", "call", "earning calls"],
+        "description": "quarterly 10-Q reports & annual 10-K reports"
+    },
+    {
+        "name": "Management",
+        "hash": "#management",
+        "tags": ["management", "ceo"],
+        "description": "Who is the ceo, how experienced are the management etc."
+    },
+    {
+        "name": "Earning Calendar",
+        "hash": "#earning-calendar",
+        "tags": ["earnings calendar", "earnings", "calendar"],
+        "description": "The upcoming calendar for earnings."
+    },
+    {
+        "name": "Recent Transacctions",
+        "hash": "#recent-transactions",
+        "tags": ["recent", "transactions"],
+        "description": "Recent transactions."
+    },
+    {
+        "name": "Social Sentiment",
+        "hash": "#social-sentiment",
+        "tags": ["social", "twitter", "social media"],
+        "description": "Social media is monitored to give a gauge of what people are saying about individual stocks. Reddit, Yahoo, StockTwits, and Twitter are among the sites monitored."
+    },
+    {
+        "name": "Past Performance",
+        "hash": "#past-performance",
+        "tags": ["past performance"],
+        "description": "An opinionated look at past performance"
+    },
+    {
+        "name": "Future Growth",
+        "hash": "#future-growth",
+        "tags": ["growth", "future growth"],
+        "description": "An opinionated look at future growth"
+    },
+    {
+        "name": "Valuation",
+        "hash": "#valuation",
+        "tags": ["valuation"],
+        "description": "An opinionated look at the valuation"
+    },
+    {
+        "name": "Financial Health",
+        "hash": "#financial-health",
+        "tags": ["health"],
+        "description": "An opinionated look at the financial health"
+    },
+    {
+        "name": "Dividends",
+        "hash": "#dividends",
+        "tags": ["dividends"],
+        "description": "The dividend yield vs market to view its sustainability"
+    }
+  ]

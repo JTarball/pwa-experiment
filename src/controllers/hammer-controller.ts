@@ -10,6 +10,7 @@ import forEach from "lodash-es/forEach";
 import { ReactiveControllerHost } from "lit";
 
 import "hammerjs";
+import propagating from "./propagating.js";
 
 export class HammerController {
     private host: ReactiveControllerHost;
@@ -86,7 +87,7 @@ export class HammerController {
 
         forEach(this.hammerEvents, (options, event) => {
             options = options || {};
-            let hammer = new Hammer(this.host);
+            let hammer = propagating(new Hammer(this.host));
             hammer.get(event);
             let handler = (e) => {
                 this.host.dispatchEvent(new CustomEvent(event, { detail: { event: e }, bubbles: false, composed: true }));
@@ -107,7 +108,7 @@ export class HammerController {
             forEach(aElements, (selector) => {
                 let aSelectorElement = this.host.shadowRoot.querySelectorAll(selector) || this.host.querySelectorAll(selector) || [];
                 forEach(aSelectorElement, (element) => {
-                    let hammer = new Hammer(element, options);
+                    let hammer = propagating(new Hammer(element, options));
                     hammer.get(event);
 
                     let handler = (e) => {

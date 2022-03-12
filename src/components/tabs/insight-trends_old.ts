@@ -32,9 +32,8 @@ class YLD0InsightTrends extends LitElement {
     @state()
     private items_day_gainers?: TrendStat[];
 
-
     @state
-    private stats = ['Day Gainers', 'Day Losers', 'Day Most Active', 'Top Crypto', 'Sector Performance']
+    private stats = ["Day Gainers", "Day Losers", "Day Most Active", "Top Crypto", "Sector Performance"];
 
     //private calendar = ['IPO Calendar', 'Dividend Calendar', 'Earning Calendar']
 
@@ -153,12 +152,12 @@ class YLD0InsightTrends extends LitElement {
     async firstUpdated() {
         const items_day_gainers: TrendStat[] = [
             {
-                symbol: 'MSFT',
-                displayName: 'Microsoft Corp',
-                logoUrl: 'https://logo.clearbit.com/microsoft.com',
-                price: '348',
-                priceChange: '3',
-                priceChangePercent: '0.3'
+                symbol: "MSFT",
+                displayName: "Microsoft Corp",
+                logoUrl: "https://logo.clearbit.com/microsoft.com",
+                price: "348",
+                priceChange: "3",
+                priceChangePercent: "0.3",
             },
         ];
         this.items_day_gainers = items_day_gainers;
@@ -224,7 +223,7 @@ class YLD0InsightTrends extends LitElement {
         return html`
             <!-- The main content is added / removed dynamically by the router -->
             <section>
-                <table>
+                <table class="yld0">
                     <!-- header -->
                     ${this.tableHeaderRenderer()}
                     <!-- data -->

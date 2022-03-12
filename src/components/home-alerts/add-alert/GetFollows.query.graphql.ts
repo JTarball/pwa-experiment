@@ -18,6 +18,7 @@ export const GetFollows = gql`
 
                 alerts {
                     uuid
+                    alert_type
                     title
                 }
             }

@@ -13,7 +13,7 @@ import { badge } from "@vaadin/vaadin-lumo-styles/badge.js";
 import { themeStyles } from "../../themes/yld0-theme/styles.js";
 
 @customElement("new-lit-element")
-class NewLitElement extends LitElement {
+export class NewLitElement extends LitElement {
     // -- Start of state, properties, queries -- //
 
     // @property({ type: Boolean, reflect: false })

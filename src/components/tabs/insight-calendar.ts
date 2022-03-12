@@ -295,7 +295,7 @@ class YLD0InsightCalendar extends LitElement {
 
     private modalContentRenderer(trRendererFunc, items: IPOCalendar[]) {
         return html`
-            <table>
+            <table class="yld0">
                 ${items?.map((i, index) => trRendererFunc(i, index))}
             </table>
         `;
@@ -308,7 +308,7 @@ class YLD0InsightCalendar extends LitElement {
 
         console.log(items);
         return html`
-            <table>
+            <table class="yld0">
                 ${funcHeaderRenderer(title)} ${items?.slice(0, 5).map((i, index) => funcRenderer(i, index))}
                 ${items?.length > 0
                     ? html`<tr>

@@ -36,7 +36,7 @@ class YLD0TabItem extends LitElement {
                 box-sizing: border-box;
                 padding: 0.5rem 0.75rem;
                 font-family: var(--lumo-font-family);
-                font-size: var(--lumo-font-size-m);
+                font-size: var(--lumo-font-size-xs);
                 line-height: var(--lumo-line-height-xs);
                 font-weight: 500;
                 opacity: 1;
@@ -56,6 +56,7 @@ class YLD0TabItem extends LitElement {
                 -webkit-user-select: none;
                 -moz-user-select: none;
                 user-select: none;
+                cursor: pointer;
             }
 
             :host(:not([orientation="vertical"])) {

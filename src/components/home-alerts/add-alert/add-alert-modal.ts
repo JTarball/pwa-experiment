@@ -49,8 +49,8 @@ class AddAlertModal extends LitElement {
     _wrapper: Element;
 
     /* Boolean displays  */
-    @state()
-    showSelectStock: boolean = true;
+    @property({ type: Boolean, reflect: false })
+    showSelectStock: boolean;
 
     /* End of boolean displays  */
 
@@ -162,7 +162,7 @@ class AddAlertModal extends LitElement {
             description: "A target price alert generates an alert when the price is reached.",
             options: [
                 { title: "On Rises", description: "Triggers on when the prices rises above the target price.", icon: "vaadin:arrow-up", formKey: "target_price_rises" },
-                { title: "On Falls", description: "Triggers on when the prices falls below the target price.", icon: "vaadin:arrow-down" },
+                { title: "On Falls", description: "Triggers on when the prices falls below the target price.", icon: "vaadin:arrow-down", formKey: "target_price_falls" },
             ],
             back: "root",
             clickForm: true,
@@ -188,7 +188,7 @@ class AddAlertModal extends LitElement {
             options: [
                 { title: "Increase", description: "Triggers when the price increases above the current price by X.", icon: "vaadin:arrows-long-up", formKey: "change_in_percent_increase" },
                 { title: "Decrease", description: "Triggers when the price decreases below the current price by X.", icon: "vaadin:arrow-long-down", formKey: "change_in_percent_decrease" },
-                { title: "Change", description: "Triggers when the price decreases or increases by X from its current price.", icon: "vaadin:arrows-long-v", formKey: "change_in_percent_change" },
+                { title: "Change", description: "Triggers when the price changes by X in any direction from its current price.", icon: "vaadin:arrows-long-v", formKey: "change_in_percent_change" },
             ],
             back: "root",
             clickForm: true,
@@ -197,7 +197,8 @@ class AddAlertModal extends LitElement {
             title: () => {
                 return `Trailing stop loss for ${this.stock?.symbol}`;
             },
-            description: "A trailing stop loss order adjusts the stop price at a fixed percent or number of points below or above the market price of a stock.",
+            description:
+                "An alert that simulates a trailing stop loss order technique adjusting the stop price at a fixed percent or number of points below the market price of a stock. The technique is used to specify a maximum possible loss without setting a limit on gains.",
             options: [
                 { title: "Price", description: "Triggers when the price increases above the current price by X.", icon: "", formKey: "trailing_stop_price" },
                 { title: "Percent", description: "Triggers when the price decreases below the current price by X.", icon: "", formKey: "trailing_stop_percent" },
@@ -207,34 +208,36 @@ class AddAlertModal extends LitElement {
         },
         trailing_high: {
             title: () => {
-                return `Trailing stop loss for ${this.stock?.symbol}`;
+                return `Trailing buy stop for ${this.stock?.symbol}`;
             },
-            description: "A trailing stop loss order adjusts the stop price at a fixed percent or number of points below or above the market price of a stock.",
+            description:
+                "An alert that simulates a trailing buy stop order technique trailing the market price adjusting the stop price only triggering when the price increases above the trigger. Most appropriate for falling markets and considered the mirror of stop loss orders.",
             options: [
-                { title: "Price", description: "Triggers when the price increases above the current price by X.", icon: "", formKey: "change_in_price_increase" },
-                { title: "Percent", description: "Triggers when the price decreases below the current price by X.", icon: "", formKey: "change_in_price_decrease" },
+                { title: "Price", description: "Trailing the market, triggers when the price increases above the current price by X.", icon: "", formKey: "trailing_high_price" },
+                { title: "Percent", description: "Trailing the market, triggers when the percent increases above X.", icon: "", formKey: "trailing_high_percent" },
             ],
             back: "root",
             clickForm: true,
         },
         earnings: {
             title: () => {
-                return `Trailing stop loss for ${this.stock?.symbol}`;
+                return `Earnings alert for ${this.stock?.symbol}`;
             },
-            description: "A trailing stop loss order adjusts the stop price at a fixed percent or number of points below or above the market price of a stock.",
+            description: "Be alerted to future earnings calls.",
             options: [
                 { title: "One Day Before", description: "Triggers a day before earnings.", icon: "", formKey: "earnings_one_day" },
                 { title: "Three Days Before", description: "Triggers three days before earnings.", icon: "", formKey: "earnings_three_days" },
                 { title: "One Week Before", description: "Triggers one week before earnings.", icon: "", formKey: "earnings_one_week" },
+                { title: "One Month Before", description: "Triggers one month before earnings.", icon: "", formKey: "earnings_one_month" },
             ],
             back: "root",
             clickForm: true,
         },
         time_review: {
             title: () => {
-                return `Trailing stop loss for ${this.stock?.symbol}`;
+                return `Time based alert for ${this.stock?.symbol}`;
             },
-            description: "A trailing stop loss order adjusts the stop price at a fixed percent or number of points below or above the market price of a stock.",
+            description: "An alert based on time e.g. review portfolio in 6 months",
             options: [
                 { title: "In One Month", description: "Triggers a time review in one month.", icon: "", formKey: "time_review_one_month" },
                 { title: "In Three Months", description: "Triggers a time review in three months.", icon: "", formKey: "time_review_three_months" },
@@ -262,8 +265,11 @@ class AddAlertModal extends LitElement {
         },
     }; // A container for display nested menu options
 
-    @state()
+    @property()
     menuKey: String = "root";
+
+    @query("#close")
+    close: Element;
 
     // --- End of properties, queries etc. --- //
 
@@ -400,7 +406,6 @@ class AddAlertModal extends LitElement {
 
     private firstUpdated() {
         this.items_current = this.options_1;
-        this.showSelectStock = true;
     }
 
     private handleOptionClick(e: Event, item) {
@@ -449,7 +454,7 @@ class AddAlertModal extends LitElement {
     // -- Other Renders -- //
     private renderAlertMenu() {
         return html`
-            <table>
+            <table class="yld0">
                 <thead>
                     <tr>
                         <th style="vertical-align: bottom;">
@@ -468,9 +473,10 @@ class AddAlertModal extends LitElement {
                         <tr
                             role="row"
                             index="${index}"
-                            @click=${() => {
+                            @click=${(e) => {
                                 if (this.menu[this.menuKey].clickForm) {
-                                    this.alertKey = "earnings_one_day";
+                                    console.log("clickForm", this.menu[this.menuKey], item);
+                                    this.alertKey = item.formKey;
 
                                     this.showAdd = true;
                                 } else {
@@ -487,7 +493,7 @@ class AddAlertModal extends LitElement {
                                               ? html`<fa-icon class="fas ${item.icon}" style="fill: white;height: 3em;width: 3em; background-color: black;border-radius: 50%; padding: 5px;"></fa-icon>`
                                               : html` ${item.icon
                                                     ? html`<vaadin-icon class="optionIcon ${item.iconStyleClass}" icon=${item.icon} theme="small"></vaadin-icon>`
-                                                    : html`<span style="width: 50px;"></span>`}`}
+                                                    : html`<vaadin-avatar name="${item.title}" theme="xsmall"></vaadin-avatar>`}`}
 
                                           <vaadin-vertical-layout style="line-height: var(--lumo-line-height-m);">
                                               <span class="title">${item.title} </span>
@@ -555,7 +561,17 @@ class AddAlertModal extends LitElement {
                     <div id="content" class="content">
                         ${this.showSelectStock
                             ? html`<select-stock @addalert=${this.handleSelectStock}></select-stock>`
-                            : html`${this.showAdd ? html`<addalert-form .stock=${this.stock} .alertKey=${this.alertKey}></addalert-form>` : html`${this.renderAlertMenu()}`} `}
+                            : html`${this.showAdd
+                                  ? html`<addalert-form
+                                        @close=${() => {
+                                            this.close.click();
+                                            this.menuKey = "root";
+                                            this.showAdd = false;
+                                        }}
+                                        .stock=${this.stock}
+                                        .alertKey=${this.alertKey}
+                                    ></addalert-form>`
+                                  : html`${this.renderAlertMenu()}`} `}
                         <slot></slot>
                     </div>
                 </section>

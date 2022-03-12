@@ -370,7 +370,7 @@ class YLD0Table extends LitElement {
         return html`
             <!-- The main content is added / removed dynamically by the router -->
             <section>
-                <table style="overflow:hidden;">
+                <table class="yld0" style="overflow:hidden;">
                     <!-- header -->
                     ${this.tableHeaderRenderer()}
                     <!-- data -->

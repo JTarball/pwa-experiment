@@ -212,14 +212,14 @@ class YLD0HistoryHome extends LitElement {
             <section>
                 ${this.items_stocks?.length == 0
                     ? html`
-                          <table id="wrapper">
+                          <table class="yld0" id="wrapper">
                               <td><img id="bgImg" src="images/bg-activity.png" alt="" /></td>
                               <span class="bgHeader">No recent history. </span>
                               <span class="bgDescription">This timeline will be filled in automatically.</span>
                           </table>
                       `
                     : html`
-                          <table>
+                          <table class="yld0">
                               <thead>
                                   <tr>
                                       <th style="vertical-align: bottom;">

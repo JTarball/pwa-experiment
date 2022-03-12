@@ -143,7 +143,7 @@ class SelectStock extends LitElement {
             </vaadin-text-field>
 
             <div id="content">
-                <table style="overflow: scroll;">
+                <table class="yld0" style="overflow: scroll;">
                     <thead>
                         <tr role="header">
                             <th style="vertical-align: bottom;">

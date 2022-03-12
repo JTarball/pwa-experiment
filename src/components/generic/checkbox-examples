@@ -1,0 +1,6 @@
+                    <!-- <check-box
+                        label="Save current price along with the note."
+                        @checked=${(e) => {
+                        this.includePrice = e.detail;
+                    }}
+                    ></check-box> -->

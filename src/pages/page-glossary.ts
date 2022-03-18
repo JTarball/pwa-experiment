@@ -9,8 +9,8 @@ import { PageElement } from "../helpers/page-element.js";
 
 import { themeStyles } from "../themes/yld0-theme/styles.js";
 
-import "../components/top-navbar";
-import "../components/bottom-navbar";
+import "../components/organisms/top-navbar/top-navbar";
+import "../components/templates/bottom-navbar";
 
 @customElement("page-glossary")
 export class PageGlossary extends PageElement {

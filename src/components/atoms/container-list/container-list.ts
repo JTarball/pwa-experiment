@@ -100,8 +100,14 @@ export class ContainerList extends LitElement {
     //     },
     // ];
 
-    @state()
+    @property({ type: Boolean, reflect: true })
+    optionalFooter: boolean = false;
+
+    @property({ type: Boolean, reflect: true })
     expanded: boolean = false;
+
+    @property({ type: Boolean, reflect: true })
+    showExpandIcon: boolean = false;
 
     @query("div.container")
     container: Element;
@@ -234,6 +240,12 @@ export class ContainerList extends LitElement {
         }
         if (this.height) {
             this.container.style.height = `${this.height}px`;
+        }
+        console.log("danvir expanded", this.expanded);
+
+        // Handle expanded
+        if (this.expanded) {
+            this.container.style.width = "700px";
         }
     }
 
@@ -420,15 +432,17 @@ export class ContainerList extends LitElement {
                                 <span class="title">${this.title}</span>
                                 <span class="description">${this.subtitle}</span>
                             </vaadin-vertical-layout>
-
-                            <vaadin-button id="expandShrink" @click=${this.handleExpandShrink} theme="icon" aria-label="Expand width">
-                                <vaadin-icon style="transform: rotate(45deg);" icon="${this.expanded ? "vaadin:compress" : "vaadin:expand"}"></vaadin-icon>
-                            </vaadin-button>
+                            ${this.showExpandIcon
+                                ? html` <vaadin-button id="expandShrink" @click=${this.handleExpandShrink} theme="icon" aria-label="Expand width">
+                                      <vaadin-icon style="transform: rotate(45deg);" icon="${this.expanded ? "vaadin:compress" : "vaadin:expand"}"></vaadin-icon>
+                                  </vaadin-button>`
+                                : html``}
                         </vaadin-horizontal-layout>
+                        <slot name="header"></slot>
                     </header>
 
                     <!-- Main table data -->
-                    <table class="yld0">
+                    <table class="yld0" style="padding-top: 0rem;">
                         <thead>
                             <tr style="border-color: var(--lumo-contrast-10pct);border-bottom-style: solid;border-bottom-width: 1px;">
                                 ${headerCells.map((header, index) => {
@@ -456,23 +470,26 @@ export class ContainerList extends LitElement {
                         </tbody>
                     </table>
                     <slot></slot>
-
-                    <footer>
-                        <vaadin-horizontal-layout style="align-items: center; text-align: center;" theme="spacing"></vaadin-horizontal-layout>
-                            
-                            <container-pagination
-                                @previous=${() => {
-                                    this.skip -= this.rowsPerPage;
-                                }}
-                                @next=${() => {
-                                    this.skip += this.rowsPerPage;
-                                }}
-                                .rows="${this.rowsPerPage}"
-                                .skip="${this.skip}"
-                                .total="${this.items.length}"
-                            ><slot name="footer"></slot></container-pagination>
-                        </vaadin-horizontal-layout>
-                    </footer>
+                    ${this.rowsPerPage >= this.items.length && this.optionalFooter
+                        ? html``
+                        : html`
+                            <footer>
+                                <vaadin-horizontal-layout style="align-items: center; text-align: center;" theme="spacing"></vaadin-horizontal-layout>
+                                    
+                                    <container-pagination
+                                        @previous=${() => {
+                                            this.skip -= this.rowsPerPage;
+                                        }}
+                                        @next=${() => {
+                                            this.skip += this.rowsPerPage;
+                                        }}
+                                        .rows="${this.rowsPerPage}"
+                                        .skip="${this.skip}"
+                                        .total="${this.items.length}"
+                                    ><slot name="footer"></slot></container-pagination>
+                                </vaadin-horizontal-layout>
+                            </footer>
+                    `}
                 </div>
             </div>
         `;

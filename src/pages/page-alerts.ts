@@ -13,8 +13,8 @@ import "@vaadin/vaadin-lumo-styles/utility";
 import config from "../config.js";
 import { PageElement } from "../helpers/page-element.js";
 
-import "../components/top-navbar";
-import "../components/bottom-navbar";
+import "../components/organisms/top-navbar/top-navbar";
+import "../components/templates/bottom-navbar";
 
 import "@vaadin/avatar";
 import "@vaadin/button";
@@ -32,8 +32,8 @@ import { badge } from "@vaadin/vaadin-lumo-styles/badge.js";
 import "@vaadin/vaadin-lumo-styles/vaadin-iconset";
 import "@vaadin/icon";
 
-import "../components/alerts.js";
-import "../components/home-alerts/alerts";
+import "../components/templates/alerts.js";
+import "../components/templates/home-alerts/alerts";
 
 @customElement("page-alerts")
 export class PageAlerts extends PageElement {

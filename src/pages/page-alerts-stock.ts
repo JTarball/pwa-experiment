@@ -13,8 +13,8 @@ import "@vaadin/vaadin-lumo-styles/utility";
 import config from "../config.js";
 import { PageElement } from "../helpers/page-element.js";
 
-import "../components/top-navbar";
-import "../components/bottom-navbar";
+import "../components/organisms/top-navbar/top-navbar";
+import "../components/templates/bottom-navbar";
 
 import "@vaadin/avatar";
 import "@vaadin/button";
@@ -32,9 +32,9 @@ import { utility } from "@vaadin/vaadin-lumo-styles/utility";
 import { badge } from "@vaadin/vaadin-lumo-styles/badge.js";
 
 import { themeStyles } from "../themes/yld0-theme/styles.js";
-import "../components/alerts-stock.js";
-import "../components/page-modal";
-import "../components/home-alerts/alerts-per-stock.js";
+import "../components/templates/alerts-stock.js";
+import "../components/templates/page-modal";
+import "../components/templates/home-alerts/alerts-per-stock.js";
 
 @customElement("page-alerts-stock")
 export class PageAlerts extends PageElement {

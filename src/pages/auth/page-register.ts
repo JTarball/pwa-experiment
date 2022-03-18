@@ -19,7 +19,7 @@ import { registerUser, askToVerifyUser, userVerified } from "../../auth/auth.js"
 import { myState } from "../../store/state.js";
 import { goPath, urlForName } from "../../router/index.js";
 
-import "../../components/yld0-simple-message-box/yld0-simple-message-box";
+import "../../components/molecules/yld0-simple-message-box/yld0-simple-message-box";
 
 function sleep(interval) {
     return new Promise((resolve) => {

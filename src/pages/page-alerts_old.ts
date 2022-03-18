@@ -13,8 +13,8 @@ import "@vaadin/vaadin-lumo-styles/utility";
 import config from "../config.js";
 import { PageElement } from "../helpers/page-element.js";
 
-import "../components/top-navbar";
-import "../components/bottom-navbar";
+import "../components/organisms/top-navbar/top-navbar";
+import "../components/templates/bottom-navbar";
 
 import "@vaadin/avatar";
 import "@vaadin/button";

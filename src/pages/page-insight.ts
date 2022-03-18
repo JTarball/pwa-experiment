@@ -1,10 +1,10 @@
 import { html, css } from "lit";
 import { customElement, query } from "lit/decorators.js";
 
-import "../components/top-navbar";
-import "../components/bottom-navbar";
-import "../components/tabs/insight-calendar";
-import "../components/tabs/insight-trends";
+import "../components/organisms/top-navbar/top-navbar";
+import "../components/templates/bottom-navbar";
+import "../components/templates/tabs/insight-calendar";
+import "../components/templates/tabs/insight-trends";
 import { HammerController } from "../controllers/hammer-controller";
 import { PageElement } from "../helpers/page-element.js";
 

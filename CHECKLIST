@@ -1,0 +1,72 @@
+We perform automated risk checks on every company. We flag any failed checks as potential investment risks. A company which passes all our checks, however, is not 'risk free'.
+
+Apple (AAPL) Risk Checks
+Fail
+Are they in a good financial position?
+
+Has a high level of debt
+Section 4.2
+Fail
+Has there been substantial insider selling in the past 3 months?
+
+Significant insider selling over the past 3 months
+Section 7.1
+Pass
+Are they forecast to achieve profitability?
+
+The company is currently profitable
+Section 3.1
+Pass
+Are revenue and earnings forecast to grow?
+
+Earnings are forecast to grow by an average of 3.9% per year for the next 3 years
+Section 2.1
+Pass
+Is their dividend sustainable?
+
+Dividend is too low to be a concern
+Section 5.0
+Pass
+Is their share price liquid and stable?
+
+Share price has been stable over the past 3 months
+Share Price
+Pass
+Do they have high quality earnings?
+
+The company’s earnings are high quality
+Section 3.1
+Pass
+Have profit margins improved over the past year?
+
+Profit margins improved or AAPL became profitable
+Section 3.1
+Pass
+Do they have sufficient financial data available?
+
+They have sufficient analyst coverage
+Section 2.0
+Pass
+Are there any concerning recent events?
+
+No concerning events detected
+Share Price
+Pass
+Have shareholders been diluted over the past year?
+
+Shareholders have not been meaningfully diluted in the past year or recently listed
+Section 7.3
+Pass
+Do they have meaningful levels of revenue?
+
+Revenue is meaningful ($378B)
+Section 3.1
+Pass
+Do they have a meaningful market capitalization?
+
+Market cap is meaningful ($2,820B)
+Section 8.0
+Pass
+Do they have negative shareholders equity?
+
+AAPL does not have negative shareholders equity.

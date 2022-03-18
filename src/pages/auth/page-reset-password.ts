@@ -15,7 +15,7 @@ import { themeStyles } from "../../themes/yld0-theme/styles.js";
 import { userExists, resetPassword } from "../../auth/auth.js";
 import { goPath, urlForName } from "../../router/index.js";
 
-import "../../components/yld0-simple-message-box/yld0-simple-message-box";
+import "../../components/molecules/yld0-simple-message-box/yld0-simple-message-box";
 
 @customElement("page-reset-password")
 export class PageResetPassword extends PageElement {

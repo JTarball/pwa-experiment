@@ -13,10 +13,10 @@ import "@vaadin/vaadin-lumo-styles/utility";
 import config from "../config.js";
 import { PageElement } from "../helpers/page-element.js";
 
-import "../components/timeline-list";
-import "../components/top-navbar";
-import "../components/bottom-navbar";
-import "../components/history";
+import "../components/templates/timeline-list";
+import "../components/organisms/top-navbar/top-navbar";
+import "../components/templates/bottom-navbar";
+import "../components/templates/history";
 
 import "@vaadin/avatar";
 import "@vaadin/button";

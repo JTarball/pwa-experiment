@@ -5,7 +5,7 @@ import { PageElementNotFound, pageNotFoundMeta } from "../helpers/page-element-n
 import { urlForName } from "../router/index.js";
 import { goPath } from "../router/index.js";
 
-import "../components/yld0-simple-message-box/yld0-simple-message-box";
+import "../components/molecules/yld0-simple-message-box/yld0-simple-message-box";
 
 @customElement("page-not-found")
 export class PageNotFound extends PageElementNotFound {

@@ -14,7 +14,7 @@ import { attachRouter, urlForName, router, getLocation } from "../router/index.j
 import "pwa-helper-components/pwa-install-button.js";
 import "pwa-helper-components/pwa-update-available.js";
 
-import "./menu.js";
+import "./organisms/menu/menu.js";
 import "@material/mwc-button";
 import "@material/mwc-icon";
 import "@material/mwc-icon-button";
@@ -34,8 +34,8 @@ import "@vaadin/vaadin-context-menu";
 import "@vaadin/vaadin-tabs";
 import "@vaadin/vaadin-tabs/vaadin-tab";
 
-import "./top-navbar";
-import "./bottom-navbar";
+import "./organisms/top-navbar/top-navbar";
+import "./templates/bottom-navbar";
 import { routes } from "../router/routes";
 
 import "@vaadin/vaadin-lumo-styles/color.js";

@@ -13,14 +13,14 @@ import "@vaadin/vaadin-lumo-styles/utility";
 import config from "../config.js";
 import { PageElement } from "../helpers/page-element.js";
 
-import "../components/top-navbar";
-import "../components/bottom-navbar";
-import "../components/yld0-tabs";
-import "../components/yld0-tab";
-import "../components/yld0-tab";
-import "../components/yld0-tabitem";
-import "../components/tabs/insight-trends";
-import "../components/tabs/insight-calendar";
+import "../components/organisms/top-navbar/top-navbar";
+import "../components/templates/bottom-navbar";
+import "../components/templates/yld0-tabs";
+import "../components/organisms/tabs/yld0-tab";
+import "../components/organisms/tabs/yld0-tab";
+import "../components/templates/yld0-tabitem";
+import "../components/templates/tabs/insight-trends";
+import "../components/templates/tabs/insight-calendar";
 
 import { themeStyles } from "../themes/yld0-theme/styles.js";
 import { utility } from "@vaadin/vaadin-lumo-styles/utility";

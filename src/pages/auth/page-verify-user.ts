@@ -10,7 +10,7 @@ import { PageElement } from "../../helpers/page-element.js";
 import { themeStyles } from "../../themes/yld0-theme/styles.js";
 import { verifyUser } from "../../auth/auth.js";
 
-import "../../components/yld0-simple-message-box/yld0-simple-message-box";
+import "../../components/molecules/yld0-simple-message-box/yld0-simple-message-box";
 
 @customElement("page-verify-user")
 export class PageVerifyUser extends PageElement {

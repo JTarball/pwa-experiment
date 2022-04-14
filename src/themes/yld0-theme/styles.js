@@ -382,6 +382,57 @@ export const themeStyles = css`
                 color:  var(--lumo-error-color);
             }
 
+            /* Metrics */
+            .metricContainer {
+                padding-right: 1rem;
+                margin: 0.4rem;
+                width: 150px;
+                text-align: left;
+            }
+
+            .metricHdr {
+                font-size: var(--lumo-font-size-xxs);
+                font-weight: 300;
+                padding-right: 0.5rem;
+            }
+
+            .positiveMetric {
+                float: right;
+                color: var(--lumo-success-color);
+                font-weight: 400;
+            }
+
+            .negativeMetric {
+                float: right;
+                color:  var(--lumo-error-color);
+                font-weight: 400;
+            }
+
+            /* End of Metrics */
+
+            /* Icon for stock price changes */
+            .percentUp {
+                border-radius: 10%;
+                background-color: #ecf9f2;
+                color: var(--lumo-success-color);
+                padding-left: 0.6rem;
+                padding-right: 0.6rem;
+                padding-top: 0.2rem;
+                padding-bottom: 0.2rem;
+            }
+
+            .percentDown {
+                border-radius: 10%;
+                background-color: #ffe6e8;
+                color: var(--lumo-error-color);
+                padding-left: 0.6rem;
+                padding-right: 0.6rem;
+                padding-top: 0.2rem;
+                padding-bottom: 0.2rem;
+            }
+
+            /* End of icon for stock price changes */
+
             /* Icon for stock price changes */
             .trendingUp {
                 border-radius: 50%;

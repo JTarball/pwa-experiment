@@ -10,7 +10,14 @@ export const GetPeersStocks = gql`
                 description
                 country
                 market_cap
+                market_cap_numerize
+
                 price
+
+                dcf_price
+                dcf_price_number
+                dcf_diff_percentage
+                dcf_diff_percentage_number
             }
             total_results
         }

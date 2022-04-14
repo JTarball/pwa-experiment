@@ -1,9 +1,9 @@
-import { LitElement, html, css, render } from "lit";
-import { customElement, query, property, state } from "lit/decorators.js";
+import { LitElement, html, css } from "lit";
+import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap } from "lit/directives/style-map.js";
 
-import "@vaadin/avatar";
+import "@vaadin/button";
 import "@vaadin/horizontal-layout";
 import "@vaadin/vertical-layout";
 import "@vaadin/form-layout";
@@ -24,7 +24,7 @@ import { themeStyles } from "../../../themes/yld0-theme/styles.js";
  *
  */
 @customElement("toggle-button")
-class ToggleButtonElement extends LitElement {
+export class ToggleButtonElement extends LitElement {
     // -- Start of state, properties, queries -- //
 
     @property({ type: Boolean, reflect: true })
@@ -39,6 +39,9 @@ class ToggleButtonElement extends LitElement {
     @property({ type: String })
     backgroundColor: string = "";
 
+    @property({ type: String })
+    theme: string = "";
+
     // -- End of properties, queries etc. -- //
 
     static styles = [
@@ -48,6 +51,9 @@ class ToggleButtonElement extends LitElement {
         themeStyles,
         css`
             vaadin-button {
+                font-family: var(--lumo-font-family);
+                font-weight: 500;
+                color: var(--_lumo-button-color, var(--lumo-primary-text-color));
                 background-color: var(--lumo-contrast-5pct);
                 float: left;
                 margin: 0.1em;
@@ -58,10 +64,23 @@ class ToggleButtonElement extends LitElement {
                 color: white;
             }
 
+            .toggleNotSelectedOutline {
+                border: 2px solid var(--lumo-base-color); /* So the button doesnt move when outlined (selected) */
+            }
+
             .toggleSelectedOutline {
                 /* background-color: var(--lumo-contrast); */
                 /* color: white; */
+                color: var(--lumo-contrast);
                 border: 2px solid var(--lumo-contrast);
+            }
+
+            .xsmall {
+                font-size: 10px;
+            }
+
+            .small {
+                font-size: var(--lumo-font-size-s);
             }
         `,
     ];
@@ -69,12 +88,20 @@ class ToggleButtonElement extends LitElement {
     // -- Handle functions -- //
     private handleSetSelected(e: Event) {
         this.selected = !this.selected;
+        var event = new CustomEvent("selected-changed", { detail: { selected: this.selected } });
+        this.dispatchEvent(event);
     }
 
     // -- Main Render -- //
     render() {
         const styles = this.selected ? { "background-color": this.backgroundColor } : {};
-        const classes = { toggleSelected: this.selected && !this.outline, toggleSelectedOutline: this.selected && this.outline };
+        const classes = {
+            toggleSelected: this.selected && !this.outline,
+            toggleNotSelectedOutline: !this.selected && this.outline,
+            toggleSelectedOutline: this.selected && this.outline,
+            small: this.theme.includes("small"),
+            xsmall: this.theme.includes("xsmall"),
+        };
         return html` <vaadin-button style=${styleMap(styles)} class="${classMap(classes)}" theme="contrast" @click="${() => this.handleSetSelected()}"><slot></slot></vaadin-button> `;
     }
 }

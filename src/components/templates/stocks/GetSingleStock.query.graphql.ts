@@ -22,7 +22,7 @@ export const GetSingleStock = gql`
                 date
                 close
             }
-            dcf
+            dcf_price
             notes {
                 uuid
                 created_at

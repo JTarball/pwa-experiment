@@ -23,6 +23,13 @@ LICENSE file in the root directory of this source tree.
 
     <link rel="import" href="lumo.html">
 
+
+
+
+
+
+
+    
     <meta name="theme-color" content="#364353" />
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -76,7 +83,33 @@ LICENSE file in the root directory of this source tree.
       :root {
         --lumo-font-size-tiny: 0.8em;
         --lumo-font-size-micro: 0.67rem;
+
+        /* HACK - DO NOT CHANGE: Do not change else yld0-ellipsis and history page background color will be affected */
+        --_lumo-button-background-color: none;
+        --_lumo-button-color: var(--secondary-text-color);
+
+        /* --lumo-primary-color: black; */
+        --lumo-primary-color: rgb(1, 111, 185);
+
+
       }
+
+      [theme~="yld0-form"] {
+        background-color: var(--lumo-base-color);
+      
+      }
+
+      
+
+      [theme~="black"] {
+
+        --lumo-primary-color: black;
+
+
+
+      }
+
+
       
     </style>
   </head>
@@ -103,12 +136,14 @@ LICENSE file in the root directory of this source tree.
 }
       </style>
   </custom-style>  -->
+  
     <app-index></app-index>
 
     <noscript>Please enable JavaScript to view this website.</noscript>
 
     <script type="module" src="src/components/app-index.ts"></script>
 
+    <script type="module" src="src/store/client.ts"></script>
 
 
 
@@ -123,6 +158,11 @@ LICENSE file in the root directory of this source tree.
     // prettier-ignore -->
     
 
+
+
+
+
+    
 
 <script>
 
@@ -209,8 +249,103 @@ if (window.matchMedia('(prefers-color-scheme)').media !== 'not all') {
   window.addEventListener('light', () => {
     setLight()
   })
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 </script>
 
     </script>
+      <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('Service Worker registered! 😎');
+          })
+          .catch(err => {
+            console.log('Registration failed 😫 ', err);
+          });
+      });
+    }
+  </script>
+
+    <script type="module">
+
+      // if (myState.loggedIn) {
+      //   //Router.go(sessionStorage.getItem('login-redirect-path') || '/');
+      // } else {
+      //   if (location.pathname !== '/login') {
+      //     //sessionStorage.setItem('login-redirect-path', location.pathname);
+      //     Router.go('/login');
+      //   }
+      // }
+
+
+      // Import the functions you need from the SDKs you need
+      // import { initializeApp } from 'firebase/app';
+
+
+      // // MOVE THIS LATER
+      // import { getMessaging, getToken } from "firebase/messaging";
+
+      // //messaging.getToken({vapidKey: "BPRLf00YZTC6FyayPX-NXu8Ykfc1ezNVjes6hiPZh1xrRSBPRN14YCn5BK7XhKaQ-8LQDpUhJeglWqodgwC7C3A"});
+
+      // // Get registration token. Initially this makes a network call, once retrieved
+      // // subsequent calls to getToken will return from cache.
+      // const messaging = getMessaging();
+      // getToken(messaging, { vapidKey: 'BPRLf00YZTC6FyayPX-NXu8Ykfc1ezNVjes6hiPZh1xrRSBPRN14YCn5BK7XhKaQ-8LQDpUhJeglWqodgwC7C3A' }).then((currentToken) => {
+      //   if (currentToken) {
+      //     console.log('currentToken', currentToken)
+      //     console.log("GRANTED");
+      //     // Send the token to your server and update the UI if necessary
+      //     // ...
+      //   } else {
+      //     // Show permission request UI
+      //     console.log('No registration token available. Request permission to generate one.');
+      //     // ...
+      //   }
+      // }).catch((err) => {
+      //   console.log('An error occurred while retrieving token. ', err);
+      // });
+
+
+    // Handle incoming messages. Called when:
+    // - a message is received while the app has focus
+    // - the user clicks on an app notification created by a service worker
+    //   `messaging.onBackgroundMessage` handler.
+    // import { onMessage } from "firebase/messaging";
+
+    // // const messaging = getMessaging();
+    // onMessage(messaging, (payload) => {
+    //   console.log('Message received. ', payload);
+    //   // ...
+    // });
+
+
+      // TURN BACK ON!!!!!!!!
+
+    // if('serviceWorker' in navigator) { 
+    //   navigator.serviceWorker.register('./firebase-messaging-sw.js').then(function(registration) {
+    //     console.log('Firebase Worker Registered');
+
+    //   }).catch(function(err) {
+    //     console.log('Service Worker registration failed: ', err);
+    //   });
+    // }
+
+    </script>
+
+
   </body>
 </html>

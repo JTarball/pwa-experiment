@@ -22,7 +22,7 @@ export const GetFollows = gql`
                 target_high_price
                 target_mean_price
                 target_median_price
-                dcf
+                dcf_price
             }
             total_results
         }

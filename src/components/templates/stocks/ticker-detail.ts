@@ -46,6 +46,7 @@ import "../../molecules/dialog-card/generic-dialog-card.ts";
 import "../../organisms/tabs/yld0-tab";
 import "../../organisms/modal-up/modal-up";
 import "../../organisms/stock-benchmarks-card/stock-benchmarks-card";
+import "../../organisms/stock-dividends-history/stock-dividends-history";
 import "../../molecules/container-card-info/container-card-info";
 
 import "../yld0-tabs";
@@ -1161,6 +1162,7 @@ export class TickerDetail extends LitElement {
                             <yld0-tab title="Summary">
                                 <div class="Chart"></div>
                                 <stock-benchmarks-card expanded .peers=${peers}></stock-benchmarks-card>
+                                <stock-dividends-history expanded .peers=${peers}></stock-dividends-history>
                                 mkldjas
                                 <tool-tip bottom>This is a tooltip</tool-tip>
 

@@ -1,5 +1,6 @@
 import { LitElement, html, css, render } from "lit";
 import { customElement, query, property, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 
 import { format, formatDistance } from "date-fns";
 
@@ -63,7 +64,7 @@ export class ContainerList extends LitElement {
     height?;
 
     @property({ type: Array })
-    headerCells = [];
+    headerCells: Array<Object> = [];
 
     @property({ type: Array })
     items = [];
@@ -109,6 +110,12 @@ export class ContainerList extends LitElement {
     @property({ type: Boolean, reflect: true })
     showExpandIcon: boolean = false;
 
+    @property({ type: Boolean, reflect: true })
+    overflow: boolean = false;
+
+    @property({ type: Boolean, reflect: true })
+    rowClickable: boolean = false;
+
     @query("div.container")
     container: Element;
 
@@ -127,7 +134,7 @@ export class ContainerList extends LitElement {
 
             .container {
                 min-width: 370px;
-                min-height: 450px;
+                /* min-height: 450px; */
                 border: 1px solid;
                 border-color: var(--lumo-contrast-10pct);
 
@@ -174,10 +181,13 @@ export class ContainerList extends LitElement {
             /* Override table styling */
             table.yld0 {
                 margin-top: 0;
-                margin-bottom: 0;
+                margin-bottom: 1rem;
                 padding: 1rem;
-                padding-right: 0.4rem;
-                padding-bottom: 0;
+                padding-right: 1rem;
+                padding-bottom: 1rem;
+            }
+
+            .overflow {
                 overflow: auto;
             }
 
@@ -187,6 +197,15 @@ export class ContainerList extends LitElement {
                 font-size: 11px;
                 padding-top: 0;
                 padding-bottom: 0;
+            }
+
+            table.rowClickable tr[role="row"],
+            table.rowClickable td[role="row"] {
+                cursor: pointer;
+            }
+
+            table.rowClickable tr[role="row"]:hover {
+                background-color: var(--lumo-shade-5pct);
             }
 
             footer {
@@ -229,6 +248,14 @@ export class ContainerList extends LitElement {
                 height: 0;
                 display: block;
             }
+
+            ::slotted(div[slot="topCorner"]) {
+                margin-left: auto;
+            }
+
+            ::slotted(div[slot="preTable"]) {
+                margin: 0.1rem;
+            }
         `,
     ];
 
@@ -266,6 +293,11 @@ export class ContainerList extends LitElement {
         });
 
         return template(...args);
+    }
+
+    handleRowClick(e: Event, row: Object, index: number) {
+        var event = new CustomEvent("row-clicked", { detail: { row: row, index: index } });
+        this.dispatchEvent(event);
     }
 
     /**
@@ -335,7 +367,13 @@ export class ContainerList extends LitElement {
             });
             args.push(
                 html`
-                    <tr role="row" index="${index}">
+                    <tr
+                        role="row"
+                        index="${index}"
+                        @click="${(e) => {
+                            this.handleRowClick(e, row, index);
+                        }}"
+                    >
                         ${tds}
                     </tr>
                 `
@@ -375,8 +413,19 @@ export class ContainerList extends LitElement {
         }
 
         const sorted = this.items.slice().sort((a, b) => {
-            let fa = a[header.id]?.toLowerCase(),
+            let fa, fb;
+            if (header.sort_id) {
+                if (typeof a[header.sort_id] == "number") {
+                    fa = a[header.sort_id];
+                    fb = b[header.sort_id];
+                } else {
+                    fa = a[header.sort_id]?.toLowerCase();
+                    fb = b[header.sort_id]?.toLowerCase();
+                }
+            } else {
+                fa = a[header.id]?.toLowerCase();
                 fb = b[header.id]?.toLowerCase();
+            }
 
             if (asc == undefined) {
                 return 0;
@@ -423,6 +472,12 @@ export class ContainerList extends LitElement {
 
         const headerCells = this.headerCells.filter((c) => !(c.visible_only_when_expanded && !this.expanded));
 
+        const classes = {
+            yld0: true,
+            overflow: this.overflow,
+            rowClickable: this.rowClickable,
+        };
+
         return html`
             <div class="container-wrapper">
                 <div class="container">
@@ -436,18 +491,21 @@ export class ContainerList extends LitElement {
                                 ? html` <vaadin-button id="expandShrink" @click=${this.handleExpandShrink} theme="icon" aria-label="Expand width">
                                       <vaadin-icon style="transform: rotate(45deg);" icon="${this.expanded ? "vaadin:compress" : "vaadin:expand"}"></vaadin-icon>
                                   </vaadin-button>`
-                                : html``}
+                                : html`<slot name="topCorner"></slot>`}
                         </vaadin-horizontal-layout>
                         <slot name="header"></slot>
                     </header>
 
                     <!-- Main table data -->
-                    <table class="yld0" style="padding-top: 0rem;">
+                    <slot name="preTable"></slot>
+                    <table class="${classMap(classes)}" style="padding-top: 0rem;">
                         <thead>
                             <tr style="border-color: var(--lumo-contrast-10pct);border-bottom-style: solid;border-bottom-width: 1px;">
                                 ${headerCells.map((header, index) => {
+                                    const textAlignStyle = header.header_text_align ? `text-align: ${header.header_text_align};` : "";
+
                                     return html`
-                                        <th style="vertical-align: bottom;">
+                                        <th style="vertical-align: bottom; ${textAlignStyle}">
                                             <span>${header.label}</span>
                                             ${header.noSort
                                                 ? html``

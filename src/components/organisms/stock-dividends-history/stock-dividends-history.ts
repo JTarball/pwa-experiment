@@ -28,7 +28,7 @@ import "../../atoms/toggle-button/toggle-button";
 import "../../atoms/tool-tip/tool-tip";
 import { GetPeersStocks } from "../../../graphql/queries/GetPeersStocks.query.graphql";
 
-@customElement("stock-benchmarks-card")
+@customElement("stock-dividends-history")
 export class StockBenchmarksCard extends LitElement {
     // -- State, properties etc -- //
 

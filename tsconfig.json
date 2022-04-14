@@ -4,7 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "declaration": true,
-    "outDir": "out",
+    "outDir": "server/dist/out",
     "sourceMap": true,
     "importHelpers": true,
     "inlineSources": true,
@@ -16,7 +16,9 @@
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
     "allowJs": true,
-    "maxNodeModuleJsDepth": 2
+    "maxNodeModuleJsDepth": 2,
+    "resolveJsonModule": true,
+    "esModuleInterop": true  
   },
   "include": ["src/**/*"]
 }

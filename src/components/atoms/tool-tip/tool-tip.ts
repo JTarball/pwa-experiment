@@ -1,4 +1,5 @@
 // Inspired by https://medium.com/carwow-product-engineering/building-a-simple-tooltip-component-that-never-goes-off-screen-c7039dcab5f9
+//                       <!-- <tool-tip width="300" .text="${row["country"]} ${row["company_name"]}">${truncate(row["description"], 150)}</tool-tip> -->
 
 import { LitElement, html, css, render } from "lit";
 import { customElement, query, property } from "lit/decorators.js";

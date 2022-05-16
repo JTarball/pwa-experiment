@@ -27,7 +27,7 @@ export const themeStyles = css`
 
             @media only screen and (min-width: 992px) {
                 section {
-                    max-width: 768px;
+                    max-width: 1020px;//1280px;//768px;
                     margin-left: auto;
                     margin-right: auto;
                     padding: 2rem;
@@ -368,6 +368,31 @@ export const themeStyles = css`
 
             /* Select & Menu Bar Options */
      
+            select {
+                font-family: inherit;
+                font-size: 14px;
+                font-weight: 400;
+                letter-spacing: 0.15px;
+                line-height: 20px;
+                -webkit-box-align: center;
+                align-items: center;
+                background-color: white;
+                border-color: rgb(172, 181, 185);
+                border-radius: 4px;
+                border-style: solid;
+                border-width: 1px;
+                color: rgb(35, 39, 41);
+                cursor: pointer;
+                display: inline-flex;
+                height: 36px;
+                min-height: 36px;
+                outline: none;
+                padding: 0px 12px;
+                position: relative;
+                white-space: nowrap;
+                width: 100%;
+                
+            }
             /* End of Select & Menu Bar Options */
 
             /* Page animations */
@@ -397,14 +422,36 @@ export const themeStyles = css`
             }
 
             .positiveMetric {
-                float: right;
+                /* float: right; */
                 color: var(--lumo-success-color);
                 font-weight: 400;
             }
 
             .negativeMetric {
-                float: right;
+                /* float: right; */
                 color:  var(--lumo-error-color);
+                font-weight: 400;
+            }
+
+            .positiveBgMetric {
+                border-radius: 10%;
+                background-color: #ecf9f2;
+                color: var(--lumo-success-color);
+                padding-left: 0.6rem;
+                padding-right: 0.6rem;
+                padding-top: 0.2rem;
+                padding-bottom: 0.2rem;
+                font-weight: 400;
+            }
+
+            .negativeBgMetric {
+                border-radius: 10%;
+                background-color: #ffe6e8;
+                color: var(--lumo-error-color);
+                padding-left: 0.6rem;
+                padding-right: 0.6rem;
+                padding-top: 0.2rem;
+                padding-bottom: 0.2rem;
                 font-weight: 400;
             }
 

@@ -462,7 +462,7 @@ class SearchInStock extends LitElement {
 
     handleGoTo(hash: string) {
         console.log("handleGoTo");
-        goPath("/stocks/NFLX", (hash = hash));
+        goPath("/stocks/MSFT", (hash = hash));
         var event = new CustomEvent("search-selected", { detail: { hash: hash } });
         this.dispatchEvent(event);
 

@@ -16,8 +16,8 @@ import { badge } from "@vaadin/vaadin-lumo-styles/badge.js";
 
 import { themeStyles } from "../../../themes/yld0-theme/styles.js";
 
-@customElement("container-pagination")
-export class ListPaginationElement extends LitElement {
+@customElement("finbar-table-pagination")
+export class FinBarTablePagination extends LitElement {
     // -- Start of state, properties, queries -- //
 
     @property({ type: Number, reflect: false })
@@ -80,9 +80,9 @@ export class ListPaginationElement extends LitElement {
 
     // -- Handle functions -- //
     handlePaginationInfo() {
-        console.log("handlePaginationInfo, ", this.skip, this.rows, this.total);
+        //console.log("handlePaginationInfo, ", this.skip, this.rows, this.total);
         if (this.total) {
-            return html` ${this.skip}-${this.skip + this.rows > this.total ? this.total : this.skip + this.rows} of ${this.total} `;
+            return html`Viewing ${this.skip}-${this.skip + this.rows > this.total ? this.total : this.skip + this.rows} of ${this.total} `;
         } else {
             return html``;
         }
@@ -120,7 +120,7 @@ export class ListPaginationElement extends LitElement {
 
     // -- Main Render -- //
     render() {
-        console.log("render", this.rows, "skip", this.skip, "total", this.total);
+        //console.debug("render", this.rows, "skip", this.skip, "total", this.total);
 
         return html`
             <vaadin-horizontal-layout style="align-items: center;">

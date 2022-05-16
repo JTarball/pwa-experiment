@@ -128,7 +128,7 @@ class StockNotes extends LitElement {
                 label: "Created at",
                 width_percentage: "25",
                 auto_truncate: true,
-                text_size: "9px",
+                text_size_style: "9px",
             },
             {
                 id: "notes",

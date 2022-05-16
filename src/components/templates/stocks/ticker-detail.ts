@@ -46,7 +46,16 @@ import "../../molecules/dialog-card/generic-dialog-card.ts";
 import "../../organisms/tabs/yld0-tab";
 import "../../organisms/modal-up/modal-up";
 import "../../organisms/stock-benchmarks-card/stock-benchmarks-card";
-import "../../organisms/stock-dividends-history/stock-dividends-history";
+//import "../../organisms/stock-dividends-history/stock-dividends-history";
+import "../../organisms/stock-dividends/stock-dividends";
+import "../../organisms/financial-health/financial-health";
+import "../../organisms/company-profile-card/company-profile-card";
+import "../../organisms/stock-profile-card/stock-profile-card";
+import "../../organisms/company-investor-relations-card/company-investor-relations-card";
+import "../../organisms/press-releases-card/press-releases-card";
+import "../../organisms/company-news-card/company-news-card";
+import "../../organisms/sec-filings-card/sec-filings-card";
+import "../../organisms/insider-trading-card/insider-trading-card";
 import "../../molecules/container-card-info/container-card-info";
 
 import "../yld0-tabs";
@@ -361,6 +370,17 @@ export class TickerDetail extends LitElement {
             }
 
             /* End of following styles */
+
+            .tabContent {
+                padding-top: 50px;
+                padding-bottom: 50px;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         `,
     ];
     // --- End of Styles --- //
@@ -1162,7 +1182,7 @@ export class TickerDetail extends LitElement {
                             <yld0-tab title="Summary">
                                 <div class="Chart"></div>
                                 <stock-benchmarks-card expanded .peers=${peers}></stock-benchmarks-card>
-                                <stock-dividends-history expanded .peers=${peers}></stock-dividends-history>
+                                
                                 mkldjas
                                 <tool-tip bottom>This is a tooltip</tool-tip>
 
@@ -1170,7 +1190,7 @@ export class TickerDetail extends LitElement {
 
 
 
-<!-- 
+
                               <container-card-info uniqId="summary-info">
                         <h4 style="margin-bottom: 2rem; color: var(--lumo-secondary-text-color); font-weight: 400;">
                             Checklists are a powerful tool to confirm your investment strategy. Once created, you can run them as a template by adding to your Notes.
@@ -1224,7 +1244,7 @@ export class TickerDetail extends LitElement {
                                         this.modalChecklistRunOpen = true;
                                         this.modalChecklistRunItem = e.detail.item;
                                     }}"
-                                ></stock-notes> -->
+                                ></stock-notes> 
             
 
                                    
@@ -1269,7 +1289,7 @@ It was not until 1999 when she and Charles went public with their romance, being
 
                               </yld0-tab>
                               <yld0-tab title="Rating">
-                                  <!-- <home-recent></home-recent> -->
+       
 
                                   yld0
 
@@ -1297,7 +1317,7 @@ It was not until 1999 when she and Charles went public with their romance, being
 
                               </yld0-tab>
                               <yld0-tab title="Fundamentals">
-                                  <!-- <home-recent></home-recent> -->
+               
                                   <div id="fundamentals">fundamentals</div>
                                   <div id="fundamentals-valuation">valuation</div>
                                   <div id="fundamentals-growth">growth</div>
@@ -1305,7 +1325,7 @@ It was not until 1999 when she and Charles went public with their romance, being
                                   Fundamentals
                               </yld0-tab>
                               <yld0-tab title="Financials">
-                                  <!-- <home-recent></home-recent> -->
+               
                                   Financials
                                       <div id="cashflow">Cashflow</div>
                                       <div id="balance-sheet">Balance Sheet</div>
@@ -1313,20 +1333,45 @@ It was not until 1999 when she and Charles went public with their romance, being
 
                               </yld0-tab>
                               <yld0-tab title="Research">
-                                  <!-- <home-recent></home-recent> -->
-                                  Research
+                                
                                   <yld0-tabs id="submenuResearch">
                                       <yld0-tab title="News">
-                                          <div id="news">News</div>
+                                        <div class="tabContent" id="news">
+                                            <company-news-card .stock=${this.stock}></company-news-card>
+                                        </div>
                                       </yld0-tab>
-                                      <yld0-tab title="Investor Relations"> 
-                                        <div id="investor-relations">Investor Relations</div>
+                                      <yld0-tab title="Company Profile"> 
+                                        <div class="tabContent" id="company-profile">
+                                            <company-profile-card .stock=${this.stock}></company-profile-card>
+                                        </div>
+                                      </yld0-tab>
+
+
+                                      <yld0-tab title="Insider Trading">
+                                        <div class="tabContent" id="insider-trading">
+                                            <insider-trading-card .stock=${this.stock}></insider-trading-card>
+                                        </div>
+                                      </yld0-tab>
+
+                                      <yld0-tab title="Stock Profile"> 
+                                        <div class="tabContent" id="stock-profile">
+                                            <stock-profile-card .stock=${this.stock}></stock-profile-card>
+                                        </div>
+                                      </yld0-tab>
+                                      <yld0-tab title="Investor Relations">
+                                        <div class="tabContent" id="investor-relations">
+                                                <company-investor-relations-card .stock=${this.stock}></company-investor-relations-card>
+                                        </div>
                                       </yld0-tab>
                                       <yld0-tab title="Press Releases">
-                                        <div id="press-releases">Press Releases</div>
+                                        <div class="tabContent" id="press-releases">
+                                            <press-releases-card .stock=${this.stock}></press-releases-card>
+                                        </div>
                                       </yld0-tab>
                                       <yld0-tab title="SEC Filings">
-                                        <div id="sec-filings">SEC Filings</div>
+                                        <div class="tabContent" id="sec-filings">
+                                            <sec-filings-card .stock=${this.stock}></sec-filings-card>
+                                        </div>
                                       </yld0-tab>
                                       <yld0-tab title="Recent Institional Transactions">
                                         <div id="recent-institional-transactions">Recent Institional Transactions</div>
@@ -1340,16 +1385,26 @@ It was not until 1999 when she and Charles went public with their romance, being
                                       <yld0-tab title="Management">
                                           <div id="management">Management</div>
                                       </yld0-tab>
+
+
+                     
+
                                       <!-- Executive -->
                                       <yld0-tab title="Earnings Calendar">
                                         <div id="earnings-calendar">Earnings Calendar</div>
                                       </yld0-tab>
+
+
+
                                       <yld0-tab title="Recent Transactions">
                                         <div id="recent-transactions">Recent Transactions</div>
                                       </yld0-tab>
+                                      <!-- FUTURE: Maybe -->
+                                      <!-- 
                                       <yld0-tab title="Social Sentiment">
                                         <div id="social-sentiment">Social Sentiment</div>
                                       </yld0-tab>
+                                      -->
                                       <yld0-tab title="Shareholders">
                                         <div id="shareholders">Shareholders</div>
                                       </yld0-tab>
@@ -1364,9 +1419,13 @@ It was not until 1999 when she and Charles went public with their romance, being
                                       </yld0-tab>
                                       <yld0-tab title="Financial Health"> 
                                           <div id="financial-health">Financial Health</div>
+                                          <financial-health></financial-health>
                                         </yld0-tab>
                                       <yld0-tab title="Dividends">
                                         <div id="dividends">Dividends</div>
+
+                                        <stock-dividends .stock=${this.stock}></stock-dividends>
+
                                       </yld0-tab>
                                   </yld0-tabs>
                               </yld0-tab>

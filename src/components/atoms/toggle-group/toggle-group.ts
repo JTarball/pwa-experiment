@@ -35,6 +35,9 @@ class ToggleGroupElement extends LitElement {
     @queryAll("toggle-button")
     _buttons?: [Element];
 
+    @property({ type: String })
+    theme: string = "";
+
     // -- End of properties, queries etc. -- //
 
     static styles = [
@@ -45,6 +48,7 @@ class ToggleGroupElement extends LitElement {
         css`
             .wrapper {
                 display: inline-block;
+                margin: 0.2rem; /* Check finbar if change */
             }
 
             .label {
@@ -94,22 +98,26 @@ class ToggleGroupElement extends LitElement {
     render() {
         return html`
             <div class="wrapper">
-                <vaadin-horizontal-layout>
-                    <label class="label">${this.label}</label>
-                    ${this.helpButton
-                        ? html` <help-tooltip>
-                              <slot name="help"></slot>
-                              <!-- <p>One-off: Sends one alert, and will eventually be removed by the system if not renabled.</p>
+                ${this.label
+                    ? html`
+                          <vaadin-horizontal-layout>
+                              <label class="label">${this.label}</label>
+                              ${this.helpButton
+                                  ? html` <help-tooltip>
+                                        <slot name="help"></slot>
+                                        <!-- <p>One-off: Sends one alert, and will eventually be removed by the system if not renabled.</p>
                         <p>Repeating Alert: Sends one alert and then resets the alert thus the alert is repeating.</p> -->
-                          </help-tooltip>`
-                        : html`<div style="padding: 1rem;"></div>`}
-                </vaadin-horizontal-layout>
-
+                                    </help-tooltip>`
+                                  : html`<div style="padding: 1rem;"></div>`}
+                          </vaadin-horizontal-layout>
+                      `
+                    : html``}
                 ${this.items?.map((item, index) => {
                     console.log("temp,", item);
                     return html`
                         <toggle-button
                             index=${index}
+                            theme=${this.theme}
                             id="${item.id}"
                             @click=${() => {
                                 this.handleSetSelected(item);

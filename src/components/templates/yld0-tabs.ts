@@ -62,6 +62,9 @@ import { formatRFC3339WithOptions } from "date-fns/fp";
 class YLD0Tabs extends LitElement {
     /* Properties, states, mixins etc. */
 
+    @state()
+    isMobile = window.matchMedia("only screen and (max-width: 768px)").matches;
+
     // Reactive controller for hammer gestures
     private _ = new HammerController(this, { panleft: {}, panright: {} }, { panleft: { selectors: ["#progress"] }, panright: { selectors: [".lemon"] }, tap: { selectors: [".lemon"] }, options: {} });
 
@@ -205,15 +208,17 @@ class YLD0Tabs extends LitElement {
 
         this.addEventListener("click", (e: Event) => this._onClick(e));
 
-        this.addEventListener("panleft", (e: Event) => {
-            this._slideLeftHandler(e);
-        });
+        if (this.isMobile) {
+            this.addEventListener("panleft", (e: Event) => {
+                this._slideLeftHandler(e);
+            });
 
-        this.srh = (e: Event) => {
-            this._slideRightHandler(e);
-        };
+            this.srh = (e: Event) => {
+                this._slideRightHandler(e);
+            };
 
-        this.addEventListener("panright", this.srh);
+            this.addEventListener("panright", this.srh);
+        }
 
         // set orientation for tab items
         this.setAttribute("orientation", this.orientation);

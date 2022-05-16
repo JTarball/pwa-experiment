@@ -286,7 +286,7 @@ export class StockBenchmarksCard extends LitElement {
                 noSort: true,
                 width_percentage: "52",
                 auto_truncate: true,
-                text_size: "14px",
+                text_size_style: "14px",
                 text_align: "right",
                 template: (row: Object) => {
                     return html`

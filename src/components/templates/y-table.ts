@@ -16,18 +16,15 @@ import { utility } from "@vaadin/vaadin-lumo-styles/utility";
 import { spacing } from "@vaadin/vaadin-lumo-styles/utilities/spacing.js";
 import { badge } from "@vaadin/vaadin-lumo-styles/badge.js";
 
-import { themeStyles } from "../../../themes/yld0-theme/styles.js";
-import { truncate } from "../../../helpers/utilities/helpers.js";
+import { themeStyles } from "../../themes/yld0-theme/styles.js";
+import { truncate } from "../../helpers/utilities/helpers.js";
 
-import "./container-search";
-import "./sort-icon";
-import "./container-pagination";
+import "../organisms/y-table/y-table-pagination";
 
 /**
  * Generic container for list
  *
  * @param  {string}    title          -  Title for the container
- * @param  {string}    subtitle       -  Subtitle for the container
  * @param  {Number}    width          -  Width of the container
  * @param  {Number}    height         -  Height of the container
  * @param  {Array}     headerCells    -  An array of objects describing how to construct the table
@@ -47,15 +44,12 @@ import "./container-pagination";
  *  },
  *
  */
-@customElement("container-list")
-export class ContainerList extends LitElement {
+@customElement("y-table")
+export class YTable extends LitElement {
     // -- Start of state, properties, queries -- //
 
     @property({ type: String })
     title = "";
-
-    @property({ type: String })
-    subtitle = "";
 
     @property({ type: Number })
     width?;
@@ -101,18 +95,6 @@ export class ContainerList extends LitElement {
     //     },
     // ];
 
-    @property({ type: String })
-    headerTextSizeStyle = "";
-
-    @property({ type: Boolean, reflect: true })
-    noBorder: boolean = false;
-
-    @property({ type: Boolean, reflect: true })
-    noHeader: boolean = false;
-
-    @property({ type: Boolean, reflect: true })
-    noFooter: boolean = false;
-
     @property({ type: Boolean, reflect: true })
     optionalFooter: boolean = false;
 
@@ -120,16 +102,7 @@ export class ContainerList extends LitElement {
     expanded: boolean = false;
 
     @property({ type: Boolean, reflect: true })
-    showExpandIcon: boolean = false;
-
-    @property({ type: Boolean, reflect: true })
     overflow: boolean = false;
-
-    @property({ type: Boolean, reflect: true })
-    rowClickable: boolean = false;
-
-    @property({ type: Boolean, reflect: true })
-    rowSelectable: boolean = false;
 
     @query("div.container")
     container: Element;
@@ -145,11 +118,7 @@ export class ContainerList extends LitElement {
             .container-wrapper {
                 display: inline-block;
                 margin: 0.1rem;
-            }
-
-            :host([noBorder]) .container {
-                border: none;
-                border-width: 0;
+                margin-top: 1rem;
             }
 
             .container {
@@ -170,16 +139,18 @@ export class ContainerList extends LitElement {
             header {
                 border-bottom: 1px solid;
                 border-color: var(--lumo-contrast-10pct);
-                padding: 1rem;
-                margin: 1rem;
+                margin: 0.5rem;
+                padding: 0.5rem;
             }
 
             span.title {
-                padding-right: 8px;
-                margin-bottom: 0.2rem;
-                color: var(--lumo-primary-text-color);
+                padding-left: 10px;
+                margin-bottom: 0rem;
+                color: var(--lumo-contrast-color);
                 font-size: var(--lumo-font-size-m);
                 font-weight: 500;
+                /* text-transform: uppercase; */
+                padding-top: 14px;
             }
 
             table {
@@ -205,32 +176,35 @@ export class ContainerList extends LitElement {
                 padding: 1rem;
                 padding-right: 1rem;
                 padding-bottom: 1rem;
+                overflow: scroll;
             }
 
             .overflow {
                 overflow: auto;
             }
 
+            table th {
+                position: -webkit-sticky; // this is for all Safari (Desktop & iOS), not for Chrome
+                position: sticky;
+                top: 0;
+                z-index: 1; // any positive value, layer order is global
+                background: #fff; // any bg-color to overlap
+            }
+
             table tr,
             table td {
-                /* text-align: left; */
+                text-align: left;
                 font-size: 11px;
-                padding-top: 0;
-                padding-bottom: 0;
+                padding-left: 12px;
+                overflow: scroll;
             }
 
-            table.rowClickable tr[role="row"],
-            table.rowClickable td[role="row"] {
-                cursor: pointer;
-            }
-
-            table.rowClickable tr[role="row"]:hover,
-            :host([rowSelectable]) table tr[role="row"]:hover {
+            table tr[role="row"]:hover {
                 background-color: var(--lumo-shade-5pct);
             }
 
             footer {
-                padding: 0.75rem 1.25rem;
+                padding: 0;
                 background-color: #f7f7f9;
                 border-top: 1px solid rgba(0, 0, 0, 0.125);
                 min-width: 100%;
@@ -276,6 +250,13 @@ export class ContainerList extends LitElement {
 
             ::slotted(div[slot="preTable"]) {
                 margin: 0.1rem;
+            }
+
+            .viewAllButton {
+            }
+
+            .iconViewAllButton {
+                padding-top: 1px;
             }
         `,
     ];
@@ -339,53 +320,30 @@ export class ContainerList extends LitElement {
         items.map((row, index) => {
             const tds = [];
 
-            headerCells.forEach(({ id, template = null, template_args = {}, width_percentage, text_align, truncate_text, auto_truncate, visible_only_when_expanded, text_size_style, time_ago }) => {
-                const widthStyle = width_percentage ? `width: ${width_percentage}%;` : "width:10%";
-                const textAlignStyle = text_align ? `text-align: ${text_align};` : "text-align: left;";
-                const textSizeStyle = text_size_style ? `font-size: ${text_size_style};` : "";
+            headerCells.forEach(
+                ({ id, template = null, template_args = {}, width_percentage, text_align, truncate_text, auto_truncate, visible_only_when_expanded, text_size, time_ago, date_format }) => {
+                    const widthStyle = width_percentage ? `width: ${width_percentage}%;` : "width:10%;";
+                    const textAlignStyle = "";
+                    const textSizeStyle = text_size ? `font-size: ${text_size};` : "";
 
-                switch (true) {
-                    case id === "created_at":
-                        if (time_ago) {
-                            tds.push(
-                                html`
-                                    <td class="ellipsis_cell" style="${widthStyle} ${textAlignStyle} ${textSizeStyle}">
-                                        <span>${formatDistance(new Date(row[id]), new Date(), { addSuffix: true })}</span>
-                                    </td>
-                                `
-                            );
-                        } else {
-                            tds.push(
-                                html`
-                                    <td class="ellipsis_cell" style="${widthStyle} ${textAlignStyle} ${textSizeStyle}">
-                                        <span>${format(new Date(row[id]), "dd MMM yyyy")}</span>
-                                    </td>
-                                `
-                            );
-                        }
-                        break;
-                    case template !== null:
-                        tds.push(html` <td style="${widthStyle} ${textAlignStyle} ${textSizeStyle}" class="ellipsis_cell">${this._buildTemplate(template, template_args, row)}</td> `);
-                        break;
-                    default:
-                        if (truncate_text && !this.expanded) {
-                            tds.push(html` <td style="${widthStyle} ${textAlignStyle} ${textSizeStyle}">${truncate(row[id], truncate_text)}</td> `);
-                        } else if (auto_truncate) {
+                    switch (true) {
+                        case template !== null:
+                            tds.push(html` <td style="${widthStyle} ${textAlignStyle} ${textSizeStyle}" class="ellipsis_cell">${this._buildTemplate(template, template_args, row)}</td> `);
+                            break;
+                        default:
                             tds.push(
                                 html`
                                     <td style="${widthStyle} ${textAlignStyle} ${textSizeStyle}" class="ellipsis_cell">
-                                        <div><span>${row[id]}</span></div>
+                                        <div><span>${date_format ? html`${format(new Date(row[id]), "dd MMM yyyy")}` : html`${row[id]}`}</span></div>
                                     </td>
                                 `
                             );
-                        } else {
-                            tds.push(html` <td style="${widthStyle} ${textSizeStyle}">${row[id]}</td> `);
-                        }
-                        return;
-                }
+                            return;
+                    }
 
-                //return row[id];
-            });
+                    //return row[id];
+                }
+            );
             args.push(
                 html`
                     <tr
@@ -405,87 +363,6 @@ export class ContainerList extends LitElement {
         return html` ${args.map((i) => html`${i}`)} `;
     }
 
-    handleExpandShrink() {
-        if (this.expanded) {
-            this.container.style.width = `${this.width}px`;
-            this.expanded = !this.expanded;
-        } else {
-            this.container.style.width = "700px";
-            this.expanded = !this.expanded;
-        }
-    }
-
-    /**
-     * Sort the results array by the column specified by the header
-     * @param asc - boolean, true if ascending, false if descending
-     * @param header - The header object that we want to sort by.
-     */
-    handleSortColumn(asc, header) {
-        // Hack for no sort: We assume no sort is before descend (asc = false)
-        // we store it so when no sort we can restore the order.
-        if (asc == undefined) {
-            this.items = this.items_no_sort;
-            this.requestUpdate();
-            return;
-        }
-
-        if (!asc && asc != undefined) {
-            this.items_no_sort = this.items;
-        }
-
-        const sorted = this.items.slice().sort((a, b) => {
-            let fa, fb;
-            if (header.sort_id) {
-                if (typeof a[header.sort_id] == "number") {
-                    fa = a[header.sort_id];
-                    fb = b[header.sort_id];
-                } else {
-                    fa = a[header.sort_id]?.toLowerCase();
-                    fb = b[header.sort_id]?.toLowerCase();
-                }
-            } else {
-                fa = a[header.id]?.toLowerCase();
-                fb = b[header.id]?.toLowerCase();
-            }
-
-            if (asc == undefined) {
-                return 0;
-            }
-
-            if (fa < fb) {
-                return asc ? 1 : -1;
-            }
-
-            if (fa > fb) {
-                return asc ? -1 : 1;
-            }
-
-            return 0;
-        });
-
-        this.items = [...sorted];
-        this.requestUpdate();
-    }
-
-    // private renderer = (root: HTMLElement) => {
-    //     render(
-    //         html`
-    //             <vaadin-list-box>
-    //                 ${this.items_select.map(
-    //                     (item) => html`
-    //                         <vaadin-item value="${item.value}">
-    //                             <div style="display: flex; align-items: center;">
-    //                                 <div>${item.label}</div>
-    //                             </div>
-    //                         </vaadin-item>
-    //                     `
-    //                 )}
-    //             </vaadin-list-box>
-    //         `,
-    //         root
-    //     );
-    // };
-
     // -- Main Render -- //
     render() {
         this.results = this.items.slice(this.skip, this.skip + this.rowsPerPage);
@@ -496,55 +373,32 @@ export class ContainerList extends LitElement {
         const classes = {
             yld0: true,
             overflow: this.overflow,
-            rowClickable: this.rowClickable,
         };
 
         return html`
             <div class="container-wrapper">
                 <div class="container">
-                    <!-- Header -->
-                    ${this.noHeader
-                        ? html``
-                        : html`
-                              <header>
-                                  <vaadin-horizontal-layout>
-                                      <vaadin-vertical-layout>
-                                          <span class="title">${this.title}</span>
-                                          <span class="description">${this.subtitle}</span>
-                                      </vaadin-vertical-layout>
-                                      ${this.showExpandIcon
-                                          ? html` <vaadin-button id="expandShrink" @click=${this.handleExpandShrink} theme="icon" aria-label="Expand width">
-                                                <vaadin-icon style="transform: rotate(45deg);" icon="${this.expanded ? "vaadin:compress" : "vaadin:expand"}"></vaadin-icon>
-                                            </vaadin-button>`
-                                          : html`<slot name="topCorner"></slot>`}
-                                  </vaadin-horizontal-layout>
-                                  <slot name="header"></slot>
-                              </header>
-                          `}
+                    <header>
+                        <vaadin-horizontal-layout>
+                            <span class="title">${this.title}</span>
+                            <span class="viewAll" style="margin-left:auto;" class="title">
+                                <vaadin-button theme="small" class="viewAllButton" style="margin-left: 10px;" @click=${this.handleViewAll}>
+                                    <vaadin-icon class="iconViewAllButton" icon="vaadin:external-link"></vaadin-icon>
+                                </vaadin-button>
+                            </span>
+                        </vaadin-horizontal-layout>
+                        <slot name="header"></slot>
+                    </header>
 
                     <!-- Main table data -->
                     <slot name="preTable"></slot>
                     <table class="${classMap(classes)}" style="padding-top: 0rem;">
                         <thead>
-                            <tr style="border-color: var(--lumo-contrast-10pct);border-bottom-style: solid;border-bottom-width: 1px;">
+                            <tr style="border-color: var(--lumo-contrast-10pct); border-bottom-style: solid; border-bottom-width: 1px;">
                                 ${headerCells.map((header, index) => {
-                                    const textAlignStyle = header.header_text_align ? `text-align: ${header.header_text_align};` : "";
-                                    const textSizeStyle = this.headerTextSizeStyle ? `font-size: ${this.headerTextSizeStyle};` : "";
-
                                     return html`
-                                        <th style="vertical-align: bottom; ${textAlignStyle} ${textSizeStyle}">
+                                        <th style="vertical-align: bottom; text-align: left; text-transform: uppercase; font-size: var(--lumo-font-size-m);">
                                             <span>${header.label}</span>
-                                            ${header.noSort
-                                                ? html``
-                                                : html`<span
-                                                      ><sort-button
-                                                          @sort-changed=${(e) => {
-                                                              console.log("sort-changed", e);
-                                                              const asc = e.detail.asc;
-                                                              this.handleSortColumn(asc, header);
-                                                          }}
-                                                      ></sort-button
-                                                  ></span>`}
                                         </th>
                                     `;
                                 })}
@@ -555,13 +409,12 @@ export class ContainerList extends LitElement {
                         </tbody>
                     </table>
                     <slot></slot>
-                    ${(this.rowsPerPage >= this.items.length && this.optionalFooter) || this.noFooter
+                    ${this.rowsPerPage >= this.items.length && this.optionalFooter
                         ? html``
                         : html`
                             <footer>
                                 <vaadin-horizontal-layout style="align-items: center; text-align: center;" theme="spacing"></vaadin-horizontal-layout>
-                                    
-                                    <container-pagination
+                                    <y-table-pagination
                                         @previous=${() => {
                                             this.skip -= this.rowsPerPage;
                                         }}
@@ -571,7 +424,7 @@ export class ContainerList extends LitElement {
                                         .rows="${this.rowsPerPage}"
                                         .skip="${this.skip}"
                                         .total="${this.items.length}"
-                                    ><slot name="footer"></slot></container-pagination>
+                                    ><slot name="footer"></slot></y-table-pagination>
                                 </vaadin-horizontal-layout>
                             </footer>
                     `}
